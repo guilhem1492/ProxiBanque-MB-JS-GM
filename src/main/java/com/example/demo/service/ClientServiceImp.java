@@ -52,8 +52,15 @@ public class ClientServiceImp implements ClientService {
 
 	@Override
 	public Client updateClient(Client client) {
-		// TODO Auto-generated method stub
-		return null;
+		Client existingClient = clientRepository.findById(client.getId()).get();
+		existingClient.setNom(client.getNom());
+		existingClient.setPrenom(client.getPrenom());
+		existingClient.setTel(client.getTel());
+		existingClient.setAdresse(client.getAdresse());
+		existingClient.setCodePostal(client.getCodePostal());
+		existingClient.setVille(client.getVille());
+		Client updatedClient = clientRepository.save(existingClient);
+		return updatedClient;
 	}
 
 }
