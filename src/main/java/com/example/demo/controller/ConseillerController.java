@@ -26,18 +26,18 @@ public class ConseillerController {
 //	}
 
 	@GetMapping
-	Iterable<Conseiller> getCustomers() {
+	Iterable<Conseiller> getConseillers() {
 
 		return conseillerService.getAllConseiller();
 	}
 
 	@PostMapping("/{id}")
-	Conseiller postCustomer(@Valid @RequestBody Conseiller c, @PathVariable Long id) {
+	Conseiller postConseiller(@Valid @RequestBody Conseiller c, @PathVariable Long id) {
 		return conseillerService.saveConseiller(c, id);
 	}
 
 	@DeleteMapping
-	void deleteCoffee(@PathVariable Long id) {
+	void deleteConseiller(@PathVariable Long id) {
 		conseillerService.deleteConseillerById(id);
 	}
 }

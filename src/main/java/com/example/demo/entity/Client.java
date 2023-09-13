@@ -25,7 +25,7 @@ public class Client {
 	@GeneratedValue
 	private Long id;
 	@NotEmpty(message = "Customer's name field can't be empty")
-	private String name;
+	private String nom;
 
 	@JsonIgnore
 	@ManyToOne
@@ -41,14 +41,25 @@ public class Client {
 	@JoinColumn(name = "compte_epargne_id", referencedColumnName = "id")
 	@JsonManagedReference
 	private CompteEpargne compteEpargne;
+	
+	private String prenom;
+	private String tel;
+	private String adresse;
+	private String codePostal;
+	private String ville;
+	
+	
+	
 
-	public Client(String name) {
-		this.name = name;
+	public Client(String nom) {
+		this.nom = nom;
 	}
+	
+	
 
 	@Override
 	public String toString() {
-		return "Client [id=" + id + ", name=" + name + ", conseiller=" + conseiller + ", compteCourant=" + compteCourant
+		return "Client [id=" + id + ", nom=" + nom + ", conseiller=" + conseiller + ", compteCourant=" + compteCourant
 				+ ", compteEpargne=" + compteEpargne + "]";
 	}
 

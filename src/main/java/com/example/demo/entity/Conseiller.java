@@ -28,7 +28,9 @@ public class Conseiller {
 	private Long id;
 
 	@NotEmpty(message = "Customer name field can't be empty")
-	private String name;
+	private String nom;
+	
+	private String prenom;
 
 	@OneToMany(mappedBy = "conseiller", cascade = { CascadeType.PERSIST })
 	private Set<Client> clients = new HashSet<Client>();
@@ -38,13 +40,13 @@ public class Conseiller {
 	@JoinColumn(name = "agence_id")
 	private Agence agence;
 
-	public Conseiller(String name) {
-		this.name = name;
+	public Conseiller(String nom) {
+		this.nom = nom;
 	}
 
 	@Override
 	public String toString() {
-		return "Conseiller [id=" + id + ", name=" + name + ", customers=" + clients + ", agence=" + agence + "]";
+		return "Conseiller [id=" + id + ", nom=" + nom + ", customers=" + clients + ", agence=" + agence + "]";
 	}
 
 }
