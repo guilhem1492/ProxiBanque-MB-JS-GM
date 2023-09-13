@@ -1,10 +1,13 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.ClientDTO;
 import com.example.demo.entity.Client;
 import com.example.demo.entity.Conseiller;
 import com.example.demo.repository.ClientRepository;
@@ -25,8 +28,19 @@ public class ClientServiceImp implements ClientService {
 //	}
 
 	@Override
-	public Iterable<Client> getAllClients() {
-		return clientRepository.findAll();
+	public List<ClientDTO> getAllClients() {
+		// TODO Auto-generated method stub
+		
+		List<Client> clients = clientRepository.findAll();
+		
+		List<ClientDTO> clientsDTOs = new ArrayList<>();
+		
+		clients.forEach(client -> {
+					ClientDTO dto = this.ClientToDTO(client);
+					clientsDTOs.add(dto);
+		});
+				
+		return clientsDTOs;
 	}
 
 	@Override
@@ -40,8 +54,16 @@ public class ClientServiceImp implements ClientService {
 	}
 
 	@Override
-	public Optional<Client> getClientById(Long id) {
-		return Optional.empty();
+	public Optional<ClientDTO> getClientById(Long id) {
+		// TODO Auto-generated method stub
+		
+		Client a = clientRepository.findById(id).orElse(null);
+		
+		ClientDTO b = this.ClientToDTO(a);
+		
+		
+		
+		return Optional.of(b);
 	}
 
 	@Override
@@ -54,6 +76,46 @@ public class ClientServiceImp implements ClientService {
 	public Client updateClient(Client client) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	
+	
+Client DTOToClient(ClientDTO clientDTO) {
+		
+		Client a = new Client();
+		
+		
+		a.setNom(clientDTO.getNom());
+		a.setPrenom(clientDTO.getPrenom());
+		a.setAdresse(clientDTO.getAdresse());
+		a.setCodePostal(clientDTO.getCodePostal());
+		a.setVille(clientDTO.getVille());
+		a.setTel(clientDTO.getTel());
+		
+				
+		a.setConseiller(conseillerRepository.findById(clientDTO.getConseiller_id()).get());
+		return a;
+		
+	}
+	
+	ClientDTO ClientToDTO(Client client) {
+		
+		ClientDTO a = new ClientDTO();
+		
+		a.setId(client.getId());
+		a.setNom(client.getNom());
+		a.setPrenom(client.getPrenom());
+		a.setAdresse(client.getAdresse());
+		a.setCodePostal(client.getCodePostal());
+		a.setVille(client.getVille());
+		a.setTel(client.getTel());
+		a.setCompteCourant(client.getCompteCourant());
+		a.setCompteEpargne(client.getCompteEpargne());
+				
+		a.setConseiller_id(client.getConseiller().getId());
+		return a;
+
+		
 	}
 
 }

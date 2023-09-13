@@ -27,7 +27,7 @@ public class Conseiller {
 	@GeneratedValue
 	private Long id;
 
-	@NotEmpty(message = "Customer name field can't be empty")
+	@NotEmpty(message = "Name field can't be empty")
 	private String nom;
 	
 	private String prenom;
