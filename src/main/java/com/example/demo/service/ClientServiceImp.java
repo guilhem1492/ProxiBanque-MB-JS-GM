@@ -73,16 +73,22 @@ public class ClientServiceImp implements ClientService {
 	}
 
 	@Override
-	public Client updateClient(Client client) {
-		Client existingClient = clientRepository.findById(client.getId()).get();
-		existingClient.setNom(client.getNom());
-		existingClient.setPrenom(client.getPrenom());
-		existingClient.setTel(client.getTel());
-		existingClient.setAdresse(client.getAdresse());
-		existingClient.setCodePostal(client.getCodePostal());
-		existingClient.setVille(client.getVille());
+	public ClientDTO updateClient(ClientDTO clientDTO) {
+		
+		Client existingClient = clientRepository.findById(clientDTO.getId()).get();
+		
+		existingClient.setNom(clientDTO.getNom());
+		existingClient.setPrenom(clientDTO.getPrenom());
+		existingClient.setTel(clientDTO.getTel());
+		existingClient.setAdresse(clientDTO.getAdresse());
+		existingClient.setCodePostal(clientDTO.getCodePostal());
+		existingClient.setVille(clientDTO.getVille());
+		
 		Client updatedClient = clientRepository.save(existingClient);
-		return updatedClient;
+		
+		ClientDTO updatedClientDTO = this.ClientToDTO(updatedClient);
+		
+		return updatedClientDTO;
 	}
 	
 	
