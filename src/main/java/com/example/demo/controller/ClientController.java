@@ -43,10 +43,10 @@ public class ClientController {
 		return clientService.getClientById(id);
 	}
 
-	@PostMapping("/{id}")
-	Client postClient(@Valid @RequestBody Client c, @PathVariable Long id) {
+	@PostMapping()
+	Client postClient(@Valid @RequestBody Client c) {
 
-		return clientService.saveClient(c, id);
+		return clientService.saveClient(c, 0L);
 	}
 
 	@DeleteMapping("/{id}")
