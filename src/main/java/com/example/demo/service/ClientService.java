@@ -1,17 +1,20 @@
 package com.example.demo.service;
 
 
+import java.util.Optional;
+
+import com.example.demo.dto.ClientDTO;
 import com.example.demo.entity.Client;
 
 public interface ClientService {
 
-	Iterable<Client> getAllClients();
+	Iterable<ClientDTO> getAllClients();
+	
+	Optional<ClientDTO> getClientById(Long id);
 
 	Client saveClient(Client client, Long id);
 
-	Client getClientById(Long id);
-
 	void deleteClientById(Long id);
 
-	Client updateClient(Client customer);
+	ClientDTO updateClient(ClientDTO clientDTO);
 }
