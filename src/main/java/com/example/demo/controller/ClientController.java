@@ -33,6 +33,12 @@ public class ClientController {
 		return clientService.getAllClients();
 	}
 
+	@GetMapping("/{id}")
+	Client getClientById(@PathVariable Long id) {
+
+		return clientService.getClientById(id);
+	}
+	
 	@PostMapping("/{id}")
 	Client postCustomer(@Valid @RequestBody Client c, @PathVariable Long id) {
 

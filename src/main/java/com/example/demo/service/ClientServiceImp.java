@@ -40,8 +40,8 @@ public class ClientServiceImp implements ClientService {
 	}
 
 	@Override
-	public Optional<Client> getClientById(Long id) {
-		return Optional.empty();
+	public Client getClientById(Long id) {
+		return clientRepository.findById(id).orElse(null);
 	}
 
 	@Override
