@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.ClientDTO;
 import com.example.demo.entity.Client;
 import com.example.demo.service.ClientService;
 
@@ -27,10 +30,15 @@ public class ClientController {
 //		this.clientService=customerService;
 //	}
 
-	@GetMapping
-	Iterable<Client> getClients() {
-
+	
+	@GetMapping()
+	Iterable<ClientDTO> getClients() {
 		return clientService.getAllClients();
+	}
+	
+	@GetMapping("/{id}")
+	Optional<ClientDTO> getClientById(@PathVariable Long id) {
+		return clientService.getClientById(id);
 	}
 
 	@PostMapping("/{id}")
