@@ -57,13 +57,13 @@ public class ClientServiceImp implements ClientService {
 	public Optional<ClientDTO> getClientById(Long id) {
 		// TODO Auto-generated method stub
 		
-		Client a = clientRepository.findById(id).orElse(null);
+		Client client = clientRepository.findById(id).orElse(null);
 		
-		ClientDTO b = this.ClientToDTO(a);
+		ClientDTO clientDTO = this.ClientToDTO(client);
 		
 		
 		
-		return Optional.of(b);
+		return Optional.of(clientDTO);
 	}
 
 	@Override
