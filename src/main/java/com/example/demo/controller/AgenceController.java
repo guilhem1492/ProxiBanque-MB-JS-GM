@@ -44,7 +44,7 @@ public class AgenceController {
 	}
 
 	@DeleteMapping("/{id}")
-	void deleteCoffee(@PathVariable Long id) {
+	void deleteAgence(@PathVariable Long id) {
 		agenceService.deleteAgenceById(id);
 	}
 }

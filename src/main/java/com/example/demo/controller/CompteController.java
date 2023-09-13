@@ -26,7 +26,7 @@ public class CompteController {
 //	}
 
 	@GetMapping
-	Iterable<Compte> getCustomers() {
+	Iterable<Compte> getComptes() {
 		return compteService.getAllCompte();
 	}
 

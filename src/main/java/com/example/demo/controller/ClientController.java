@@ -17,7 +17,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/customers")
+@RequestMapping("/clients")
 public class ClientController {
 
 	@Autowired
@@ -28,7 +28,7 @@ public class ClientController {
 //	}
 
 	@GetMapping
-	Iterable<Client> getCustomers() {
+	Iterable<Client> getClients() {
 
 		return clientService.getAllClients();
 	}
@@ -40,13 +40,13 @@ public class ClientController {
 	}
 	
 	@PostMapping("/{id}")
-	Client postCustomer(@Valid @RequestBody Client c, @PathVariable Long id) {
+	Client postClient(@Valid @RequestBody Client c, @PathVariable Long id) {
 
 		return clientService.saveClient(c, id);
 	}
 
 	@DeleteMapping("/{id}")
-	void deleteCoffee(@PathVariable Long id) {
+	void deleteClient(@PathVariable Long id) {
 		clientService.deleteClientById(id);
 	}
 }
