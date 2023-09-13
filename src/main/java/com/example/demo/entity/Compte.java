@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import java.time.LocalDate;
 
@@ -10,7 +10,13 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Compte {
@@ -24,12 +30,9 @@ public class Compte {
 	@NotNull(message = "Compte solde field can't be null")
 	private int solde;
 	private LocalDate creationDate;
-	
-	@OneToOne
-	private Customer customer;
 
-	public Compte() {
-	}
+	@OneToOne
+	private Client client;
 
 	public Compte(String type, String numCompte, int solde, LocalDate creationDate) {
 		this.type = type;
@@ -38,60 +41,10 @@ public class Compte {
 		this.creationDate = creationDate;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getNumCompte() {
-		return numCompte;
-	}
-
-	public void setNumCompte(String numCompte) {
-		this.numCompte = numCompte;
-	}
-
-	public int getSolde() {
-		return solde;
-	}
-
-	public void setSolde(int solde) {
-		this.solde = solde;
-	}
-
-	public LocalDate getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(LocalDate creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	@Override
 	public String toString() {
 		return "Compte [id=" + id + ", type=" + type + ", numCompte=" + numCompte + ", solde=" + solde
 				+ ", creationDate=" + creationDate + "]";
 	}
-
-	
 
 }

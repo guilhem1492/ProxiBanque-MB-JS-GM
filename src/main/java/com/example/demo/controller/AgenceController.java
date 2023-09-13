@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.Agence;
+import com.example.demo.entity.Agence;
 import com.example.demo.service.AgenceService;
 
 import jakarta.validation.Valid;
@@ -19,11 +20,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/agences")
 public class AgenceController {
 
+	@Autowired
 	private AgenceService agenceService;
 
-	public AgenceController(AgenceService agenceService) {
-		this.agenceService = agenceService;
-	}
+//	public AgenceController(AgenceService agenceService) {
+//		this.agenceService = agenceService;
+//	}
 
 	@GetMapping
 	Iterable<Agence> getAgences() {

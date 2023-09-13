@@ -3,30 +3,32 @@ package com.example.demo.service;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Repository.AgenceRepository;
-
-import com.example.demo.model.Agence;
+import com.example.demo.entity.Agence;
+import com.example.demo.repository.AgenceRepository;
 
 @Service
-public class AgenceServiceImp implements AgenceService{
+public class AgenceServiceImp implements AgenceService {
 
+	@Autowired
 	private AgenceRepository agenceRepository;
+
+	@Autowired
 	private RandomCodeGeneratorService randomCodeGeneratorService;
 
-	public AgenceServiceImp(AgenceRepository agenceRepository, RandomCodeGeneratorService randomCodeGeneratorService) {
-		this.agenceRepository = agenceRepository;
-		this.randomCodeGeneratorService = randomCodeGeneratorService;
-	}
-	
-	
+//	public AgenceServiceImp(AgenceRepository agenceRepository, RandomCodeGeneratorService randomCodeGeneratorService) {
+//		this.agenceRepository = agenceRepository;
+//		this.randomCodeGeneratorService = randomCodeGeneratorService;
+//	}
+
 	public Agence createAgence(String name) {
-        String codeAlpha = randomCodeGeneratorService.generateRandomCode();
-        LocalDate creationDate = LocalDate.now();
-        return new Agence(name, codeAlpha, creationDate);
-    }
-	
+		String codeAlpha = randomCodeGeneratorService.generateRandomCode();
+		LocalDate creationDate = LocalDate.now();
+		return new Agence(name, codeAlpha, creationDate);
+	}
+
 	@Override
 	public Iterable<Agence> getAllAgences() {
 		// TODO Auto-generated method stub
@@ -47,7 +49,7 @@ public class AgenceServiceImp implements AgenceService{
 	@Override
 	public void deleteAgenceById(Long id) {
 		agenceRepository.deleteById(id);
-		
+
 	}
 
 	@Override

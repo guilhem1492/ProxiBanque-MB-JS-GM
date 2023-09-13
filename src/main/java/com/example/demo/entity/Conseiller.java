@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,67 +13,38 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Conseiller {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@NotEmpty(message = "Customer name field can't be empty")
 	private String name;
 
 	@OneToMany(mappedBy = "conseiller", cascade = { CascadeType.PERSIST })
-	private Set<Customer> customers = new HashSet<Customer>();
+	private Set<Client> clients = new HashSet<Client>();
 
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "agence_id")
 	private Agence agence;
 
-	public Conseiller() {
-	}
-
 	public Conseiller(String name) {
 		this.name = name;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Set<Customer> getCustomers() {
-		return customers;
-	}
-
-	public void setCustomers(Set<Customer> customers) {
-		this.customers = customers;
-	}
-
-	public Agence getAgence() {
-		return agence;
-	}
-
-	public void setAgence(Agence agence) {
-		this.agence = agence;
-	}
-
 	@Override
 	public String toString() {
-		return "Conseiller [id=" + id + ", name=" + name + ", customers=" + customers + ", agence=" + agence + "]";
+		return "Conseiller [id=" + id + ", name=" + name + ", customers=" + clients + ", agence=" + agence + "]";
 	}
 
 }

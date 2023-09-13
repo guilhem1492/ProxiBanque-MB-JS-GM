@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import java.util.Optional;
 
-import com.example.demo.model.Agence;
+import com.example.demo.entity.Agence;
 
 public interface AgenceService {
 

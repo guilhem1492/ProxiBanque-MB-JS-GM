@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import java.time.LocalDate;
 
@@ -12,7 +12,7 @@ public class CompteEpargne extends Compte {
 
 	@JsonBackReference
 	@OneToOne(mappedBy = "compte")
-	private Customer customer;
+	private Client client;
 	
 	public CompteEpargne() {
 		super();

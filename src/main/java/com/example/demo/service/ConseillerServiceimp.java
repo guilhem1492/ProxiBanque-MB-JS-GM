@@ -2,25 +2,28 @@ package com.example.demo.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Repository.AgenceRepository;
-import com.example.demo.Repository.ConseillerRepository;
-import com.example.demo.model.Agence;
-import com.example.demo.model.Conseiller;
+import com.example.demo.entity.Agence;
+import com.example.demo.entity.Conseiller;
+import com.example.demo.repository.AgenceRepository;
+import com.example.demo.repository.ConseillerRepository;
 
 @Service
 public class ConseillerServiceimp implements ConseillerService {
 
-	
+	@Autowired
 	private ConseillerRepository conseillerRepository;
+
+	@Autowired
 	private AgenceRepository agenceRepository;
 
-	public ConseillerServiceimp(ConseillerRepository conseillerRepository,AgenceRepository agenceRepository) {
-		this.conseillerRepository = conseillerRepository;
-		this.agenceRepository =agenceRepository;
-	}
-	
+//	public ConseillerServiceimp(ConseillerRepository conseillerRepository,AgenceRepository agenceRepository) {
+//		this.conseillerRepository = conseillerRepository;
+//		this.agenceRepository =agenceRepository;
+//	}
+
 	@Override
 	public Iterable<Conseiller> getAllConseiller() {
 		// TODO AuconseillerRepositoryto-generated method stub
@@ -35,7 +38,7 @@ public class ConseillerServiceimp implements ConseillerService {
 			conseiller.setAgence(agence);
 		}
 
-	    return conseillerRepository.save(conseiller);
+		return conseillerRepository.save(conseiller);
 	}
 
 	@Override
@@ -47,11 +50,11 @@ public class ConseillerServiceimp implements ConseillerService {
 	@Override
 	public void deleteConseillerById(Long id) {
 		conseillerRepository.deleteById(id);
-		
+
 	}
 
 	@Override
-	public Conseiller updateConseiller(Conseiller customer) {
+	public Conseiller updateConseiller(Conseiller conseiller) {
 		// TODO Auto-generated method stub
 		return null;
 	}

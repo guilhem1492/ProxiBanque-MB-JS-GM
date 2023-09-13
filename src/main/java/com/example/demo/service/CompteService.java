@@ -3,7 +3,7 @@ package com.example.demo.service;
 import java.util.Optional;
 
 import com.example.demo.dto.VirementDTO;
-import com.example.demo.model.Compte;
+import com.example.demo.entity.Compte;
 
 public interface CompteService {
 
