@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.VirementDTO;
 import com.example.demo.entity.Compte;
 import com.example.demo.service.CompteService;
+import com.example.demo.service.VirementException;
 
 import jakarta.validation.Valid;
 
@@ -38,8 +41,23 @@ public class CompteController {
 		return compteService.saveCompte(newCompte, id);
 	}
 
+//	@PostMapping("/virement")
+//	public void virement(@RequestBody VirementDTO virementDTO) throws virementException {
+//		compteService.virementCompte(virementDTO);
+//	}
+
 	@PostMapping("/virement")
-	public void virement(@RequestBody VirementDTO virementDTO) {
-		compteService.virementCompte(virementDTO);
+	public ResponseEntity<String> virement(@RequestBody VirementDTO virementDTO) throws VirementException {
+		String messageReponse = compteService.virementComptes(virementDTO);
+
+		if (messageReponse == "Solde insuffisant."
+				|| messageReponse == "Seuls les virements externes de comptes courants à comptes courants sont autorisés."
+				|| messageReponse == "Le montant du virement doit être positif.") {
+			return new ResponseEntity<>(messageReponse, HttpStatus.FORBIDDEN);
+		} else {
+
+			return ResponseEntity.ok(messageReponse);
+		}
 	}
+
 }

@@ -8,10 +8,16 @@ import com.example.demo.entity.Compte;
 public interface CompteService {
 
 	Compte createCompte(String type, int solde);
+
 	Iterable<Compte> getAllCompte();
-	Compte saveCompte(Compte compte,Long id);
+
+	Compte saveCompte(Compte compte, Long id);
+
 	Optional<Compte> getCompteById(Long id);
+
 	void deleteCompteById(Long id);
+
 	Compte updateCompte(Compte compte);
-	public void virementCompte(VirementDTO virementDTO);
+
+	public String virementComptes(VirementDTO virementDTO) throws VirementException;
 }
