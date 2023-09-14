@@ -40,4 +40,14 @@ public class ConseillerController {
 	void deleteConseiller(@PathVariable Long id) {
 		conseillerService.deleteConseillerById(id);
 	}
+
+	@GetMapping("/{auth}")
+	Conseiller getConseillersByNameByPassword(@RequestBody String Login, @RequestBody String Password) {
+
+		return conseillerService.getConseillerByLoginByPassword(Login, Password);
+	}
+
+	
+	
+	
 }

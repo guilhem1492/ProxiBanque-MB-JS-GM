@@ -59,4 +59,11 @@ public class ConseillerServiceimp implements ConseillerService {
 		return null;
 	}
 
+	@Override
+	public Conseiller getConseillerByLoginByPassword(String login, String password) {
+		// TODO Auto-generated method stub
+		
+		return conseillerRepository.findByLoginAndPassword(login, password);
+	}
+
 }
