@@ -87,21 +87,101 @@ public class CompteServiceImp implements CompteService {
 		return null;
 	}
 
-	public void virementCompte(VirementDTO virementDTO) {
+//	public void virementCompte(VirementDTO virementDTO) {
+//		Optional<Compte> optionalCompteSource = compteRepository.findById(virementDTO.idSource());
+//		Optional<Compte> optionalCompteDestinataire = compteRepository.findById(virementDTO.idDestination());
+//		if (optionalCompteSource.isPresent() && optionalCompteDestinataire.isPresent()) {
+//			Compte compteSource = optionalCompteSource.get();
+//			Compte compteDestinataire = optionalCompteDestinataire.get();
+//			if (compteSource.getSolde() >= virementDTO.montant() && virementDTO.montant() > 0) {
+//				compteSource.setSolde(compteSource.getSolde() - virementDTO.montant());
+//				compteDestinataire.setSolde(compteDestinataire.getSolde() + virementDTO.montant());
+//
+//				compteRepository.save(compteSource);
+//				compteRepository.save(compteDestinataire);
+//			}
+//		}
+//		;
+//
+//	}
+
+	public String virementComptes(VirementDTO virementDTO) throws VirementException {
+		try {
+			String messageReponse = "";
+
+			if (virementDTO.montant() > 0) {
+				return virementExterne(virementDTO, messageReponse);
+			} else {
+				messageReponse = "Le montant du virement doit être positif.";
+				throw new VirementException(messageReponse);
+
+			}
+
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+
+	}
+
+	public String virementExterne(VirementDTO virementDTO, String messageReponse) throws VirementException {
 		Optional<Compte> optionalCompteSource = compteRepository.findById(virementDTO.idSource());
 		Optional<Compte> optionalCompteDestinataire = compteRepository.findById(virementDTO.idDestination());
+
 		if (optionalCompteSource.isPresent() && optionalCompteDestinataire.isPresent()) {
 			Compte compteSource = optionalCompteSource.get();
 			Compte compteDestinataire = optionalCompteDestinataire.get();
-			if (compteSource.getSolde() >= virementDTO.montant() && virementDTO.montant() > 0) {
-				compteSource.setSolde(compteSource.getSolde() - virementDTO.montant());
-				compteDestinataire.setSolde(compteDestinataire.getSolde() + virementDTO.montant());
 
-				compteRepository.save(compteSource);
-				compteRepository.save(compteDestinataire);
+			if (compteSource instanceof CompteCourant && compteDestinataire instanceof CompteCourant) {
+				if (compteSource.getSolde() - virementDTO.montant() >= -1000) {
+					compteSource.setSolde(compteSource.getSolde() - virementDTO.montant());
+					compteDestinataire.setSolde(compteDestinataire.getSolde() + virementDTO.montant());
+
+					compteRepository.save(compteSource);
+					compteRepository.save(compteDestinataire);
+
+				} else {
+					messageReponse = "Solde insuffisant.";
+					throw new VirementException(messageReponse);
+				}
+
+			} else {
+				messageReponse = "Seuls les virements externes de comptes courants à comptes courants sont autorisés.";
+				throw new VirementException(messageReponse);
 			}
-		}
-		;
 
+		}
+		messageReponse = "Virement effectué avec succès.";
+		return messageReponse;
+	}
+
+	public String virementInterne(VirementDTO virementDTO, String messageReponse) throws VirementException {
+		Optional<Compte> optionalCompteSource = compteRepository.findById(virementDTO.idSource());
+		Optional<Compte> optionalCompteDestinataire = compteRepository.findById(virementDTO.idDestination());
+
+		if (optionalCompteSource.isPresent() && optionalCompteDestinataire.isPresent()) {
+			Compte compteSource = optionalCompteSource.get();
+			Compte compteDestinataire = optionalCompteDestinataire.get();
+
+			if (compteSource instanceof CompteEpargne && compteDestinataire instanceof CompteEpargne) {
+				if (compteSource.getSolde() - virementDTO.montant() >= -1000) {
+					compteSource.setSolde(compteSource.getSolde() - virementDTO.montant());
+					compteDestinataire.setSolde(compteDestinataire.getSolde() + virementDTO.montant());
+
+					compteRepository.save(compteSource);
+					compteRepository.save(compteDestinataire);
+
+				} else {
+					messageReponse = "Solde insuffisant.";
+					throw new VirementException(messageReponse);
+				}
+
+			} else {
+				messageReponse = "Seuls les virements externes de comptes courants à comptes courants sont autorisés.";
+				throw new VirementException(messageReponse);
+			}
+
+		}
+		messageReponse = "Virement effectué avec succès.";
+		return messageReponse;
 	}
 }

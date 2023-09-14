@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -31,7 +32,7 @@ public class Compte {
 	private int solde;
 	private LocalDate creationDate;
 
-	@OneToOne
+	@ManyToOne
 	private Client client;
 
 	public Compte(String type, String numCompte, int solde, LocalDate creationDate) {

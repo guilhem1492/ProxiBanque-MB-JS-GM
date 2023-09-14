@@ -15,4 +15,7 @@ public interface ConseillerService {
 	void deleteConseillerById(Long id);
 
 	Conseiller updateConseiller(Conseiller conseiller);
+
+	Conseiller getConseillerByLoginByPassword(String login, String password);
+
 }

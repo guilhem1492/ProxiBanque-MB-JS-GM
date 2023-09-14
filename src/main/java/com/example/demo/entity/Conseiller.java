@@ -31,6 +31,9 @@ public class Conseiller {
 	private String nom;
 	
 	private String prenom;
+	private Boolean gradeGerant;
+	private String login;
+	private String password;
 
 	@OneToMany(mappedBy = "conseiller", cascade = { CascadeType.PERSIST })
 	private Set<Client> clients = new HashSet<Client>();
@@ -48,5 +51,7 @@ public class Conseiller {
 	public String toString() {
 		return "Conseiller [id=" + id + ", nom=" + nom + ", customers=" + clients + ", agence=" + agence + "]";
 	}
+	
+	
 
 }
