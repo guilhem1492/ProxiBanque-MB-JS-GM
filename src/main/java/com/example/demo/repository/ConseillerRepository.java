@@ -8,7 +8,7 @@ import com.example.demo.entity.Conseiller;
 
 public interface ConseillerRepository extends JpaRepository<Conseiller, Long>{
 	
-	@Query(value = "SELECT t from Conseiller t WHERE t.login = :login AND t.password = :password")
-	Conseiller findByLoginAndPassword(@Param("login") String login, @Param("password") String password);
+	
+	Conseiller findByLoginAndPassword(String login, String password);
 
 }
