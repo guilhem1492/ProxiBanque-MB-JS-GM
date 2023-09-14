@@ -105,7 +105,7 @@ public class CompteServiceImp implements CompteService {
 //
 //	}
 
-	public String virementCompte(VirementDTO virementDTO) throws SimpleException {
+	public String virementCompte(VirementDTO virementDTO) throws VirementException {
 		String messageReponse;
 
 		try {
@@ -127,21 +127,21 @@ public class CompteServiceImp implements CompteService {
 							compteRepository.save(compteDestinataire);
 
 						} else {
-							messageReponse = "Solde insuffisant";
-							throw new SimpleException(messageReponse);
+							messageReponse = "Solde insuffisant.";
+							throw new VirementException(messageReponse);
 						}
 
 					} else {
-						messageReponse = "Seuls les virements de comptes courants à comptes courants sont autorisés";
-						throw new SimpleException(messageReponse);
+						messageReponse = "Seuls les virements externes de comptes courants à comptes courants sont autorisés.";
+						throw new VirementException(messageReponse);
 					}
 
 				}
-				messageReponse = "Virement effectué avec succès !";
+				messageReponse = "Virement effectué avec succès.";
 				return messageReponse;
 			} else {
-				messageReponse = "Le montant du virement doit être positif";
-				throw new SimpleException(messageReponse);
+				messageReponse = "Le montant du virement doit être positif.";
+				throw new VirementException(messageReponse);
 
 			}
 
