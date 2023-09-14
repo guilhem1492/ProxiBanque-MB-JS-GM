@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.VirementDTO;
 import com.example.demo.entity.Compte;
 import com.example.demo.service.CompteService;
+import com.example.demo.service.SimpleException;
 
 import jakarta.validation.Valid;
 
@@ -37,7 +38,7 @@ public class CompteController {
 	}
 
 	@PostMapping("/virement")
-	public void virement(@RequestBody VirementDTO virementDTO) {
+	public void virement(@RequestBody VirementDTO virementDTO) throws SimpleException {
 		compteService.virementCompte(virementDTO);
 	}
 }

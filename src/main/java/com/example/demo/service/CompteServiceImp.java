@@ -87,21 +87,67 @@ public class CompteServiceImp implements CompteService {
 		return null;
 	}
 
-	public void virementCompte(VirementDTO virementDTO) {
-		Optional<Compte> optionalCompteSource = compteRepository.findById(virementDTO.idSource());
-		Optional<Compte> optionalCompteDestinataire = compteRepository.findById(virementDTO.idDestination());
-		if (optionalCompteSource.isPresent() && optionalCompteDestinataire.isPresent()) {
-			Compte compteSource = optionalCompteSource.get();
-			Compte compteDestinataire = optionalCompteDestinataire.get();
-			if (compteSource.getSolde() >= virementDTO.montant() && virementDTO.montant() > 0) {
-				compteSource.setSolde(compteSource.getSolde() - virementDTO.montant());
-				compteDestinataire.setSolde(compteDestinataire.getSolde() + virementDTO.montant());
+//	public void virementCompte(VirementDTO virementDTO) {
+//		Optional<Compte> optionalCompteSource = compteRepository.findById(virementDTO.idSource());
+//		Optional<Compte> optionalCompteDestinataire = compteRepository.findById(virementDTO.idDestination());
+//		if (optionalCompteSource.isPresent() && optionalCompteDestinataire.isPresent()) {
+//			Compte compteSource = optionalCompteSource.get();
+//			Compte compteDestinataire = optionalCompteDestinataire.get();
+//			if (compteSource.getSolde() >= virementDTO.montant() && virementDTO.montant() > 0) {
+//				compteSource.setSolde(compteSource.getSolde() - virementDTO.montant());
+//				compteDestinataire.setSolde(compteDestinataire.getSolde() + virementDTO.montant());
+//
+//				compteRepository.save(compteSource);
+//				compteRepository.save(compteDestinataire);
+//			}
+//		}
+//		;
+//
+//	}
 
-				compteRepository.save(compteSource);
-				compteRepository.save(compteDestinataire);
+	public String virementCompte(VirementDTO virementDTO) throws SimpleException {
+		String messageReponse;
+
+		try {
+
+			if (virementDTO.montant() > 0) {
+				Optional<Compte> optionalCompteSource = compteRepository.findById(virementDTO.idSource());
+				Optional<Compte> optionalCompteDestinataire = compteRepository.findById(virementDTO.idDestination());
+
+				if (optionalCompteSource.isPresent() && optionalCompteDestinataire.isPresent()) {
+					Compte compteSource = optionalCompteSource.get();
+					Compte compteDestinataire = optionalCompteDestinataire.get();
+
+					if (compteSource instanceof CompteCourant && compteDestinataire instanceof CompteCourant) {
+						if (compteSource.getSolde() - virementDTO.montant() >= -1000) {
+							compteSource.setSolde(compteSource.getSolde() - virementDTO.montant());
+							compteDestinataire.setSolde(compteDestinataire.getSolde() + virementDTO.montant());
+
+							compteRepository.save(compteSource);
+							compteRepository.save(compteDestinataire);
+
+						} else {
+							messageReponse = "Solde insuffisant";
+							throw new SimpleException(messageReponse);
+						}
+
+					} else {
+						messageReponse = "Seuls les virements de comptes courants à comptes courants sont autorisés";
+						throw new SimpleException(messageReponse);
+					}
+
+				}
+				messageReponse = "Virement effectué avec succès !";
+				return messageReponse;
+			} else {
+				messageReponse = "Le montant du virement doit être positif";
+				throw new SimpleException(messageReponse);
+
 			}
+
+		} catch (Exception e) {
+			return e.getMessage();
 		}
-		;
 
 	}
 }
