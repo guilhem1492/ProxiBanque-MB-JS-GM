@@ -86,6 +86,8 @@ public class ClientServiceImp implements ClientService {
 		
 		Client updatedClient = clientRepository.save(existingClient);
 		
+		client coucou = clientRepository.findBy(null, null)
+		
 		ClientDTO updatedClientDTO = this.ClientToDTO(updatedClient);
 		
 		return updatedClientDTO;
