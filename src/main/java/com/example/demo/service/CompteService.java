@@ -19,5 +19,5 @@ public interface CompteService {
 
 	Compte updateCompte(Compte compte);
 
-	public String virementCompte(VirementDTO virementDTO) throws VirementException;
+	public String virementComptes(VirementDTO virementDTO) throws VirementException;
 }

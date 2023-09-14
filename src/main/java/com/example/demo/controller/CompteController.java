@@ -46,11 +46,11 @@ public class CompteController {
 
 	@PostMapping("/virement")
 	public ResponseEntity<String> virement(@RequestBody VirementDTO virementDTO) throws VirementException {
-		String messageReponse = compteService.virementCompte(virementDTO);
+		String messageReponse = compteService.virementComptes(virementDTO);
 
-		if (messageReponse == "Solde insuffisant"
-				|| messageReponse == "Seuls les virements externes de comptes courants à comptes courants sont autorisés"
-				|| messageReponse == "Le montant du virement doit être positif") {
+		if (messageReponse == "Solde insuffisant."
+				|| messageReponse == "Seuls les virements externes de comptes courants à comptes courants sont autorisés."
+				|| messageReponse == "Le montant du virement doit être positif.") {
 			return new ResponseEntity<>(messageReponse, HttpStatus.FORBIDDEN);
 		} else {
 
