@@ -38,7 +38,7 @@ public class Conseiller {
 	@OneToMany(mappedBy = "conseiller", cascade = { CascadeType.PERSIST })
 	private Set<Client> clients = new HashSet<Client>();
 
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name = "agence_id")
 	private Agence agence;

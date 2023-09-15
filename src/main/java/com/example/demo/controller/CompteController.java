@@ -52,8 +52,9 @@ public class CompteController {
 
 		if (messageReponse == "Solde insuffisant."
 				|| messageReponse == "Seuls les virements externes de comptes courants à comptes courants sont autorisés."
-				|| messageReponse == "Le montant du virement doit être positif.") {
-			return new ResponseEntity<>(messageReponse, HttpStatus.FORBIDDEN);
+				|| messageReponse == "Le montant du virement doit être positif."
+				|| messageReponse == "ERREUR. Les ID des deux comptes doivent être valides et différents.") {
+			return new ResponseEntity<>(messageReponse, HttpStatus.BAD_REQUEST);
 		} else {
 
 			return ResponseEntity.ok(messageReponse);

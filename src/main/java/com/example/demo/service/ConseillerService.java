@@ -2,6 +2,9 @@ package com.example.demo.service;
 
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
+
+import com.example.demo.dto.ConseillerDTO;
 import com.example.demo.entity.Conseiller;
 
 public interface ConseillerService {
@@ -16,6 +19,6 @@ public interface ConseillerService {
 
 	Conseiller updateConseiller(Conseiller conseiller);
 
-	Conseiller getConseillerByLoginByPassword(String login, String password);
+	ConseillerDTO getConseillerByLoginByPassword(String login, String password);
 
 }
