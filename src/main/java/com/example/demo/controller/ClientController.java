@@ -31,25 +31,36 @@ public class ClientController {
 	private ClientService clientService;
 
 	@GetMapping()
-    Iterable<ClientDTO> getClients() {
-        return clientService.getAllClients();
-    }
+	Iterable<ClientDTO> getClients() {
+		return clientService.getAllClients();
+	}
 
-    @GetMapping("/{id}")
-    Optional<ClientDTO> getClientById(@PathVariable Long id) {
-        return clientService.getClientById(id);
-    }
+	@GetMapping("/{id}")
+	Optional<ClientDTO> getClientById(@PathVariable Long id) {
+		return clientService.getClientById(id);
+	}
 
-    @PostMapping()
-    Client postClient(@Valid @RequestBody Client c) {
+	@PostMapping("/conseiller/{id}")
+	Client postClient(@Valid @PathVariable Long id, @RequestBody Client c) {
 
-        return clientService.saveClient(c, 0L);
-    }
+		return clientService.saveClient(c, id);
+	}
 
-    @DeleteMapping("/{id}")
-    void deleteClient(@PathVariable Long id) {
-        clientService.deleteClientById(id);
-    }
+	@DeleteMapping("/{id}")
+	void deleteClient(@PathVariable Long id) {
+		clientService.deleteClientById(id);
+	}
+
+//	@DeleteMapping("/{id}")
+//	public ResponseEntity<String> deleteClient(@PathVariable Long id) throws Exception {
+//		String messageReponse = clientService.deleteClientById(id);
+//
+//		if (messageReponse == "Les comptes du client doivent être à 0.") {
+//			return new ResponseEntity<>(messageReponse, HttpStatus.BAD_REQUEST);
+//		} else {
+//			return ResponseEntity.ok(messageReponse);
+//		}
+//	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<ClientDTO> updateClient(@PathVariable("id") final Long id, @RequestBody ClientDTO client) {
