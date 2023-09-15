@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.VirementDTO;
 import com.example.demo.entity.Compte;
 import com.example.demo.service.CompteService;
-import com.example.demo.service.VirementException;
+import com.example.demo.service.VirementImpossibleException;
 
 import jakarta.validation.Valid;
 
@@ -47,12 +47,12 @@ public class CompteController {
 //	}
 
 	@PostMapping("/virement")
-	public ResponseEntity<String> virement(@RequestBody VirementDTO virementDTO) throws VirementException {
+	public ResponseEntity<String> virement(@RequestBody VirementDTO virementDTO) throws VirementImpossibleException {
 		String messageReponse = compteService.virementComptes(virementDTO);
 
 		if (messageReponse == "Solde insuffisant."
 				|| messageReponse == "Seuls les virements externes de comptes courants à comptes courants sont autorisés."
-				|| messageReponse == "Le montant du virement doit être positif."
+				|| messageReponse == "Le montant du virement doit être compris entre 1 et 10000 euros."
 				|| messageReponse == "ERREUR. Les ID des deux comptes doivent être valides et différents.") {
 			return new ResponseEntity<>(messageReponse, HttpStatus.BAD_REQUEST);
 		} else {

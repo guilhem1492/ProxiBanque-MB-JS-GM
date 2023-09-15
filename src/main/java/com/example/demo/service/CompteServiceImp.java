@@ -87,11 +87,11 @@ public class CompteServiceImp implements CompteService {
 		return null;
 	}
 
-	public String virementComptes(VirementDTO virementDTO) throws VirementException {
+	public String virementComptes(VirementDTO virementDTO) throws VirementImpossibleException {
 		try {
 			String messageReponse = "";
 
-			if (virementDTO.montant() > 0) {
+			if (virementDTO.montant() > 0 && virementDTO.montant() <= 10000) {
 
 				Optional<Compte> optionalCompteSource = compteRepository.findById(virementDTO.idSource());
 				Optional<Compte> optionalCompteDestinataire = compteRepository.findById(virementDTO.idDestination());
@@ -107,28 +107,28 @@ public class CompteServiceImp implements CompteService {
 						return virementInterne(virementDTO, messageReponse, compteSource, compteDestinataire);
 					} else {
 						messageReponse = "Seuls les virements externes de comptes courants à comptes courants sont autorisés.";
-						throw new VirementException(messageReponse);
+						throw new VirementImpossibleException(messageReponse);
 					}
 				} else {
 					messageReponse = "ERREUR. Les ID des deux comptes doivent être valides et différents.";
-					throw new VirementException(messageReponse);
+					throw new VirementImpossibleException(messageReponse);
 
 				}
 
 			} else {
-				messageReponse = "Le montant du virement doit être positif.";
-				throw new VirementException(messageReponse);
+				messageReponse = "Le montant du virement doit être compris entre 1 et 10000 euros.";
+				throw new VirementImpossibleException(messageReponse);
 
 			}
 
-		} catch (Exception e) {
+		} catch (VirementImpossibleException e) {
 			return e.getMessage();
 		}
 
 	}
 
 	public String virementExterne(VirementDTO virementDTO, String messageReponse, Compte compteSource,
-			Compte compteDestinataire) throws VirementException {
+			Compte compteDestinataire) throws VirementImpossibleException {
 
 		if (compteSource.getSolde() - virementDTO.montant() >= -1000) {
 			compteSource.setSolde(compteSource.getSolde() - virementDTO.montant());
@@ -139,7 +139,7 @@ public class CompteServiceImp implements CompteService {
 
 		} else {
 			messageReponse = "Solde insuffisant.";
-			throw new VirementException(messageReponse);
+			throw new VirementImpossibleException(messageReponse);
 		}
 
 		messageReponse = "Virement effectué avec succès.";
@@ -147,7 +147,7 @@ public class CompteServiceImp implements CompteService {
 	}
 
 	public String virementInterne(VirementDTO virementDTO, String messageReponse, Compte compteSource,
-			Compte compteDestinataire) throws VirementException {
+			Compte compteDestinataire) throws VirementImpossibleException {
 
 		if (compteSource instanceof CompteCourant && compteDestinataire instanceof CompteEpargne) {
 			if (compteSource.getSolde() - virementDTO.montant() >= -1000) {
@@ -159,7 +159,7 @@ public class CompteServiceImp implements CompteService {
 
 			} else {
 				messageReponse = "Solde insuffisant.";
-				throw new VirementException(messageReponse);
+				throw new VirementImpossibleException(messageReponse);
 			}
 
 		} else if (compteSource instanceof CompteEpargne && compteDestinataire instanceof CompteCourant) {
@@ -172,7 +172,7 @@ public class CompteServiceImp implements CompteService {
 
 			} else {
 				messageReponse = "Solde insuffisant.";
-				throw new VirementException(messageReponse);
+				throw new VirementImpossibleException(messageReponse);
 			}
 
 		}
