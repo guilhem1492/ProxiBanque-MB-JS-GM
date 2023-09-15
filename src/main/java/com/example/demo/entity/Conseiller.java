@@ -47,6 +47,8 @@ public class Conseiller {
 		this.nom = nom;
 	}
 
+	
+	
 	@Override
 	public String toString() {
 		return "Conseiller [id=" + id + ", nom=" + nom + ", customers=" + clients + ", agence=" + agence + "]";

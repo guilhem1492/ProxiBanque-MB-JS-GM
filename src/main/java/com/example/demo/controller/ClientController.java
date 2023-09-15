@@ -19,6 +19,7 @@ import com.example.demo.dto.ClientDTO;
 import com.example.demo.entity.Client;
 import com.example.demo.service.ClientService;
 
+
 import jakarta.validation.Valid;
 
 @RestController
@@ -28,10 +29,6 @@ public class ClientController {
 
 	@Autowired
 	private ClientService clientService;
-
-//	public ClientController(ClientService customerService,ConseillerService conseillerService) {
-//		this.clientService=customerService;
-//	}
 
 	@GetMapping()
     Iterable<ClientDTO> getClients() {
