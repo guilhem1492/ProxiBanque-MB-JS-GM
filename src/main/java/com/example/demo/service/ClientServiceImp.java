@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.ClientDTO;
 import com.example.demo.entity.Client;
+import com.example.demo.entity.CompteCourant;
+import com.example.demo.entity.CompteEpargne;
 import com.example.demo.entity.Conseiller;
 import com.example.demo.repository.ClientRepository;
+import com.example.demo.repository.CompteRepository;
 import com.example.demo.repository.ConseillerRepository;
 
 @Service
@@ -21,6 +25,12 @@ public class ClientServiceImp implements ClientService {
 
 	@Autowired
 	private ConseillerRepository conseillerRepository;
+	
+	@Autowired
+	private CompteRepository compteRepository;
+	
+	@Autowired
+	private RandomCodeGeneratorService codeGenerator;
 
 //	public ClientServiceImp(ClientRepository clientRepository, ConseillerRepository conseillerRepository) {
 //		this.clientRepository = clientRepository;
@@ -50,7 +60,28 @@ public class ClientServiceImp implements ClientService {
 			Conseiller conseiller = conseillerOptional.get();
 			client.setConseiller(conseiller);
 		}
-		return clientRepository.save(client);
+		
+	
+		Client client2 = clientRepository.save(client);
+		
+		
+				
+		CompteCourant compteCourant = new CompteCourant("cc", codeGenerator.generateRandomCode(), 0, LocalDate.now());
+		CompteEpargne compteEpargne = new CompteEpargne("ce", codeGenerator.generateRandomCode(), 0, LocalDate.now());
+		
+		
+		
+		compteCourant.setClient(client2);
+		compteEpargne.setClient(client2);
+				
+		
+		client2.setCompteCourant(compteCourant);
+		client2.setCompteEpargne(compteEpargne);
+		
+		compteRepository.save(compteCourant);
+		compteRepository.save(compteEpargne);
+		
+		return client2;
 	}
 
 	@Override
