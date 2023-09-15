@@ -54,6 +54,17 @@ public class ClientController {
 		clientService.deleteClientById(id);
 	}
 
+//	@DeleteMapping("/{id}")
+//	public ResponseEntity<String> deleteClient(@PathVariable Long id) throws Exception {
+//		String messageReponse = clientService.deleteClientById(id);
+//
+//		if (messageReponse == "Les comptes du client doivent être à 0.") {
+//			return new ResponseEntity<>(messageReponse, HttpStatus.BAD_REQUEST);
+//		} else {
+//			return ResponseEntity.ok(messageReponse);
+//		}
+//	}
+
 	@PutMapping("/{id}")
 	public ResponseEntity<ClientDTO> updateClient(@PathVariable("id") final Long id, @RequestBody ClientDTO client) {
 		client.setId(id);
