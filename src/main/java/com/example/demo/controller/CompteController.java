@@ -41,18 +41,32 @@ public class CompteController {
 		return compteService.saveCompte(newCompte, id);
 	}
 
+//	@PostMapping("/virement")
+//	public ResponseEntity<String> virement(@RequestBody VirementDTO virementDTO) throws VirementImpossibleException {
+//		String messageReponse = compteService.virementComptes(virementDTO);
+//
+//		if (messageReponse == "Solde insuffisant."
+//				|| messageReponse == "Seuls les virements externes de comptes courants à comptes courants sont autorisés."
+//				|| messageReponse == "Le montant du virement doit être compris entre 1 et 10000 euros."
+//				|| messageReponse == "ERREUR. Les ID des deux comptes doivent être valides et différents.") {
+//			return new ResponseEntity<>(messageReponse, HttpStatus.BAD_REQUEST);
+//		} else {
+//
+//			return ResponseEntity.ok(messageReponse);
+//		}
+//	}
+
 	@PostMapping("/virement")
 	public ResponseEntity<String> virement(@RequestBody VirementDTO virementDTO) throws VirementImpossibleException {
-		String messageReponse = compteService.virementComptes(virementDTO);
-
-		if (messageReponse == "Solde insuffisant."
-				|| messageReponse == "Seuls les virements externes de comptes courants à comptes courants sont autorisés."
-				|| messageReponse == "Le montant du virement doit être compris entre 1 et 10000 euros."
-				|| messageReponse == "ERREUR. Les ID des deux comptes doivent être valides et différents.") {
-			return new ResponseEntity<>(messageReponse, HttpStatus.BAD_REQUEST);
-		} else {
-
-			return ResponseEntity.ok(messageReponse);
+		try {
+			String messageReponse = compteService.virementComptes(virementDTO);
+			if (messageReponse != "Virement effectué avec succès.") {
+				throw new VirementImpossibleException(messageReponse);
+			} else {
+				return new ResponseEntity<>(messageReponse, HttpStatus.OK);
+			}
+		} catch (VirementImpossibleException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 

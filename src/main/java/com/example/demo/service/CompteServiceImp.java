@@ -130,7 +130,24 @@ public class CompteServiceImp implements CompteService {
 	public String virementExterne(VirementDTO virementDTO, String messageReponse, Compte compteSource,
 			Compte compteDestinataire) throws VirementImpossibleException {
 
-		if (compteSource.getSolde() - virementDTO.montant() >= -1000) {
+		return saveTransaction(virementDTO, messageReponse, compteSource, compteDestinataire, -1000);
+
+	}
+
+	public String virementInterne(VirementDTO virementDTO, String messageReponse, Compte compteSource,
+			Compte compteDestinataire) throws VirementImpossibleException {
+
+		if (compteSource instanceof CompteCourant && compteDestinataire instanceof CompteEpargne) {
+			return saveTransaction(virementDTO, messageReponse, compteSource, compteDestinataire, -1000);
+		} else {
+			return saveTransaction(virementDTO, messageReponse, compteSource, compteDestinataire, 0);
+		}
+
+	}
+
+	public String saveTransaction(VirementDTO virementDTO, String messageReponse, Compte compteSource,
+			Compte compteDestinataire, int limiteSolde) throws VirementImpossibleException {
+		if (compteSource.getSolde() - virementDTO.montant() >= limiteSolde) {
 			compteSource.setSolde(compteSource.getSolde() - virementDTO.montant());
 			compteDestinataire.setSolde(compteDestinataire.getSolde() + virementDTO.montant());
 
@@ -144,41 +161,7 @@ public class CompteServiceImp implements CompteService {
 
 		messageReponse = "Virement effectué avec succès.";
 		return messageReponse;
-	}
 
-	public String virementInterne(VirementDTO virementDTO, String messageReponse, Compte compteSource,
-			Compte compteDestinataire) throws VirementImpossibleException {
-
-		if (compteSource instanceof CompteCourant && compteDestinataire instanceof CompteEpargne) {
-			if (compteSource.getSolde() - virementDTO.montant() >= -1000) {
-				compteSource.setSolde(compteSource.getSolde() - virementDTO.montant());
-				compteDestinataire.setSolde(compteDestinataire.getSolde() + virementDTO.montant());
-
-				compteRepository.save(compteSource);
-				compteRepository.save(compteDestinataire);
-
-			} else {
-				messageReponse = "Solde insuffisant.";
-				throw new VirementImpossibleException(messageReponse);
-			}
-
-		} else if (compteSource instanceof CompteEpargne && compteDestinataire instanceof CompteCourant) {
-			if (compteSource.getSolde() - virementDTO.montant() >= 0) {
-				compteSource.setSolde(compteSource.getSolde() - virementDTO.montant());
-				compteDestinataire.setSolde(compteDestinataire.getSolde() + virementDTO.montant());
-
-				compteRepository.save(compteSource);
-				compteRepository.save(compteDestinataire);
-
-			} else {
-				messageReponse = "Solde insuffisant.";
-				throw new VirementImpossibleException(messageReponse);
-			}
-
-		}
-
-		messageReponse = "Virement effectué avec succès.";
-		return messageReponse;
 	}
 
 }
