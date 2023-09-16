@@ -41,11 +41,6 @@ public class CompteController {
 		return compteService.saveCompte(newCompte, id);
 	}
 
-//	@PostMapping("/virement")
-//	public void virement(@RequestBody VirementDTO virementDTO) throws virementException {
-//		compteService.virementCompte(virementDTO);
-//	}
-
 	@PostMapping("/virement")
 	public ResponseEntity<String> virement(@RequestBody VirementDTO virementDTO) throws VirementImpossibleException {
 		String messageReponse = compteService.virementComptes(virementDTO);

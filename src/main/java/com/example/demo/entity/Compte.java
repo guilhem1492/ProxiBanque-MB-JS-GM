@@ -8,7 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -25,10 +24,10 @@ public class Compte {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@NotEmpty(message = "Compte type field can't be empty")
+	@NotEmpty(message = "Le type du compte doit être renseigné.")
 	private String type;
 	private String numCompte;
-	@NotNull(message = "Compte solde field can't be null")
+	@NotNull(message = "Le solde du compte est requis.")
 	private int solde;
 	private LocalDate creationDate;
 

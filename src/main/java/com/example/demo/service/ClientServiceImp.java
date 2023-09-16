@@ -25,10 +25,10 @@ public class ClientServiceImp implements ClientService {
 
 	@Autowired
 	private ConseillerRepository conseillerRepository;
-	
+
 	@Autowired
 	private CompteRepository compteRepository;
-	
+
 	@Autowired
 	private RandomCodeGeneratorService codeGenerator;
 
@@ -39,7 +39,6 @@ public class ClientServiceImp implements ClientService {
 
 	@Override
 	public List<ClientDTO> getAllClients() {
-		// TODO Auto-generated method stub
 
 		List<Client> clients = clientRepository.findAll();
 
@@ -60,33 +59,26 @@ public class ClientServiceImp implements ClientService {
 			Conseiller conseiller = conseillerOptional.get();
 			client.setConseiller(conseiller);
 		}
-		
-	
+
 		Client client2 = clientRepository.save(client);
-		
-		
-				
+
 		CompteCourant compteCourant = new CompteCourant("cc", codeGenerator.generateRandomCode(), 0, LocalDate.now());
 		CompteEpargne compteEpargne = new CompteEpargne("ce", codeGenerator.generateRandomCode(), 0, LocalDate.now());
-		
-		
-		
+
 		compteCourant.setClient(client2);
 		compteEpargne.setClient(client2);
-				
-		
+
 		client2.setCompteCourant(compteCourant);
 		client2.setCompteEpargne(compteEpargne);
-		
+
 		compteRepository.save(compteCourant);
 		compteRepository.save(compteEpargne);
-		
+
 		return client2;
 	}
 
 	@Override
 	public Optional<ClientDTO> getClientById(Long id) {
-		// TODO Auto-generated method stub
 
 		Client client = clientRepository.findById(id).orElse(null);
 

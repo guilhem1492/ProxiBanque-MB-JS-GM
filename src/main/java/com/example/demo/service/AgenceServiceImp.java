@@ -23,21 +23,20 @@ public class AgenceServiceImp implements AgenceService {
 //		this.randomCodeGeneratorService = randomCodeGeneratorService;
 //	}
 
-	public Agence createAgence(String name) {
+	public Agence createAgence(String nom) {
 		String codeAlpha = randomCodeGeneratorService.generateRandomCode();
 		LocalDate creationDate = LocalDate.now();
-		return new Agence(name, codeAlpha, creationDate);
+		return new Agence(nom, codeAlpha, creationDate);
 	}
 
 	@Override
 	public Iterable<Agence> getAllAgences() {
-		// TODO Auto-generated method stub
 		return agenceRepository.findAll();
 	}
 
 	@Override
 	public Agence saveAgence(Agence agence) {
-		Agence newAgence = createAgence(agence.getName());
+		Agence newAgence = createAgence(agence.getNom());
 		return agenceRepository.save(newAgence);
 	}
 

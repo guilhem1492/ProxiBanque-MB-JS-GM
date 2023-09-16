@@ -29,7 +29,6 @@ public class AgenceController {
 
 	@GetMapping
 	Iterable<Agence> getAgences() {
-
 		return agenceService.getAllAgences();
 	}
 

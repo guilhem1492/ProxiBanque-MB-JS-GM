@@ -25,8 +25,8 @@ public class Agence {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@NotEmpty(message = "Agence name field can't be empty")
-	private String name;
+	@NotEmpty(message = "Le nom de l'agence doit être renseigné.")
+	private String nom;
 	private String codeAlpha;
 	private LocalDate creationDate;
 
@@ -35,14 +35,14 @@ public class Agence {
 	private Set<Conseiller> Conseillers = new HashSet<Conseiller>();
 
 	public Agence(String name, String codeAlpha, LocalDate creationDate) {
-		this.name = name;
+		this.nom = name;
 		this.codeAlpha = codeAlpha;
 		this.creationDate = creationDate;
 	}
 
 	@Override
 	public String toString() {
-		return "Agence [id=" + id + ", name=" + name + ", codeAlpha=" + codeAlpha + ", creationDate=" + creationDate
+		return "Agence [id=" + id + ", nom=" + nom + ", codeAlpha=" + codeAlpha + ", creationDate=" + creationDate
 				+ "]";
 	}
 

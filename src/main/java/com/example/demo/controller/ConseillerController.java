@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,7 +31,6 @@ public class ConseillerController {
 
 	@GetMapping
 	Iterable<Conseiller> getConseillers() {
-
 		return conseillerService.getAllConseiller();
 	}
 
@@ -48,11 +45,10 @@ public class ConseillerController {
 	}
 
 	@GetMapping("/auth")
-	ConseillerDTO getConseillersByNameByPassword(@RequestParam("login") String login, @RequestParam("password") String password) {
+	ConseillerDTO getConseillersByNameByPassword(@RequestParam("login") String login,
+			@RequestParam("password") String password) {
 		return conseillerService.getConseillerByLoginByPassword(login, password);
-	    
+
 	}
-	
-	
-	
+
 }

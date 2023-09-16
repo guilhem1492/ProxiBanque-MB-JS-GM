@@ -24,7 +24,7 @@ public class Client {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@NotEmpty(message = "Customer's name field can't be empty")
+	@NotEmpty(message = "Le nom du client doit être renseigné.")
 	private String nom;
 
 	@JsonIgnore
@@ -41,21 +41,16 @@ public class Client {
 	@JoinColumn(name = "compte_epargne_id", referencedColumnName = "id")
 	@JsonManagedReference
 	private CompteEpargne compteEpargne;
-	
+
 	private String prenom;
 	private String tel;
 	private String adresse;
 	private String codePostal;
 	private String ville;
-	
-	
-	
 
 	public Client(String nom) {
 		this.nom = nom;
 	}
-	
-	
 
 	@Override
 	public String toString() {

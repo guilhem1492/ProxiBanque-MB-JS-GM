@@ -3,7 +3,6 @@ package com.example.demo.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.ConseillerDTO;
@@ -63,18 +62,17 @@ public class ConseillerServiceimp implements ConseillerService {
 
 	@Override
 	public ConseillerDTO getConseillerByLoginByPassword(String login, String password) {
-		// TODO Auto-generated method stub
-	    Conseiller conseiller = conseillerRepository.findByLoginAndPassword(login, password);
-	    ConseillerDTO conseillerDTO = new ConseillerDTO();
-	    
-	    // Copiez les propriétés de l'entité Conseiller dans l'objet ConseillerDTO
-	    conseillerDTO.setId(conseiller.getId());
-	    conseillerDTO.setNom(conseiller.getNom());
-	    conseillerDTO.setPrenom(conseiller.getPrenom());
-	    conseillerDTO.setGradeGerant(conseiller.getGradeGerant());
-	    conseillerDTO.setAgence(conseiller.getAgence());
-	    
-	    return conseillerDTO;
+		Conseiller conseiller = conseillerRepository.findByLoginAndPassword(login, password);
+		ConseillerDTO conseillerDTO = new ConseillerDTO();
+
+		// Copier les propriétés de l'entité Conseiller dans l'objet ConseillerDTO
+		conseillerDTO.setId(conseiller.getId());
+		conseillerDTO.setNom(conseiller.getNom());
+		conseillerDTO.setPrenom(conseiller.getPrenom());
+		conseillerDTO.setGradeGerant(conseiller.getGradeGerant());
+		conseillerDTO.setAgence(conseiller.getAgence());
+
+		return conseillerDTO;
 	}
 
 }

@@ -3,8 +3,6 @@ package com.example.demo.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,9 +25,9 @@ public class Conseiller {
 	@GeneratedValue
 	private Long id;
 
-	@NotEmpty(message = "Name field can't be empty")
+	@NotEmpty(message = "Le nom du conseiller doit être renseigné.")
 	private String nom;
-	
+
 	private String prenom;
 	private Boolean gradeGerant;
 	private String login;
@@ -38,7 +36,6 @@ public class Conseiller {
 	@OneToMany(mappedBy = "conseiller", cascade = { CascadeType.PERSIST })
 	private Set<Client> clients = new HashSet<Client>();
 
-	
 	@ManyToOne
 	@JoinColumn(name = "agence_id")
 	private Agence agence;
@@ -51,7 +48,5 @@ public class Conseiller {
 	public String toString() {
 		return "Conseiller [id=" + id + ", nom=" + nom + ", customers=" + clients + ", agence=" + agence + "]";
 	}
-	
-	
 
 }

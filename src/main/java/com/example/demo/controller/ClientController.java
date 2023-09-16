@@ -45,7 +45,6 @@ public class ClientController {
 
 	@PostMapping("/conseiller/{id}")
 	Client postClient(@Valid @PathVariable Long id, @RequestBody Client c) {
-
 		return clientService.saveClient(c, id);
 	}
 
