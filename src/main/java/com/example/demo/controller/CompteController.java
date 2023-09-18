@@ -54,7 +54,7 @@ public class CompteController {
 	}
 
 	@ExceptionHandler(VirementImpossibleException.class)
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public String traiterVirementImpossible(VirementImpossibleException exception) {
 		return exception.getMessage();
 	}
