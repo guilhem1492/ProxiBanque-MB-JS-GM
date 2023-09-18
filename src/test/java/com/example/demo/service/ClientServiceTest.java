@@ -85,6 +85,26 @@ public class ClientServiceTest {
 	}
 
 //	@Test
+//	void deleteClientByIdIfBothAccountToZero() throws Exception {
+//		Client clientTest = new Client();
+//		CompteCourant compteCourant = new CompteCourant();
+//		CompteEpargne compteEpargne = new CompteEpargne();
+//
+//		clientTest.setId(111L);
+//		clientTest.setCompteCourant(compteCourant);
+//		clientTest.setCompteEpargne(compteEpargne);
+//
+//		clientTest.getCompteCourant().setSolde(0);
+//		clientTest.getCompteEpargne().setSolde(0);
+//
+//		String messageReponse = clientService.deleteClientById(clientTest.getId());
+//
+//		assertEquals(messageReponse, "Client supprimé.");
+//		verify(clientRepository, times(1)).deleteById(clientTest.getId());
+//
+//	}
+
+//	@Test
 //	void deleteClientById() {
 //
 //		Client client = TestUtils.getClient();

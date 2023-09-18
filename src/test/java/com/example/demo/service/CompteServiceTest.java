@@ -1,7 +1,12 @@
 package com.example.demo.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +20,6 @@ import com.example.demo.dto.VirementDTO;
 import com.example.demo.entity.Client;
 import com.example.demo.entity.Compte;
 import com.example.demo.entity.CompteCourant;
-import com.example.demo.entity.CompteEpargne;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.CompteRepository;
 import com.example.demo.utils.TestUtils;
@@ -23,64 +27,73 @@ import com.example.demo.utils.TestUtils;
 @SpringBootTest
 public class CompteServiceTest {
 
-    @MockBean
-    private CompteRepository compteRepository;
+	@MockBean
+	private CompteRepository compteRepository;
 
-    @Autowired
-    private CompteServiceImp compteService;
+	@Autowired
+	private CompteServiceImp compteService;
 
-    @MockBean
-    private ClientRepository clientRepository;
+	@MockBean
+	private ClientRepository clientRepository;
 
-    @Test
-    void createCompte() {
-        String type = "cc";
-        int solde = 1000;
+	@Test
+	void createCompte() {
+		String type = "cc";
+		int solde = 1000;
 
-        Compte compte = compteService.createCompte(type, solde);
+		Compte compte = compteService.createCompte(type, solde);
 
-        assertNotNull(compte);
-        assertTrue(compte instanceof CompteCourant);
-        assertEquals(type, compte.getType());
-        assertNotNull(compte.getNumCompte());
-        assertEquals(solde, compte.getSolde());
-        assertNotNull(compte.getCreationDate());
-    }
+		assertNotNull(compte);
+		assertTrue(compte instanceof CompteCourant);
+		assertEquals(type, compte.getType());
+		assertNotNull(compte.getNumCompte());
+		assertEquals(solde, compte.getSolde());
+		assertNotNull(compte.getCreationDate());
+	}
 
-    @Test
-    void getAllComptes() {
-        Compte compte = TestUtils.getCompte();
-        when(compteRepository.findAll()).thenReturn(List.of(compte));
+	@Test
+	void getAllComptes() {
+		Compte compte = TestUtils.getCompte();
+		when(compteRepository.findAll()).thenReturn(List.of(compte));
 
-        List<Compte> comptes = (List<Compte>) compteService.getAllCompte();
+		List<Compte> comptes = (List<Compte>) compteService.getAllCompte();
 
-        assertEquals(comptes.size(), 1);
-    }
+		assertEquals(comptes.size(), 1);
+	}
 
-    @Test
-    void saveCompte() {
-        Compte compte = TestUtils.getCompte();
-        Client client = TestUtils.getClient();
-        compte.setClient(client);
-        
-        when(clientRepository.findById(client.getId())).thenReturn(Optional.of(client));
-        when(compteRepository.save(any(Compte.class))).thenReturn(compte);
+	@Test
+	void saveCompte() {
+		Compte compte = TestUtils.getCompte();
+		Client client = TestUtils.getClient();
+		compte.setClient(client);
 
-        Compte savedCompte = compteService.saveCompte(compte, client.getId());
+		when(clientRepository.findById(client.getId())).thenReturn(Optional.of(client));
+		when(compteRepository.save(any(Compte.class))).thenReturn(compte);
 
-        assertNotNull(savedCompte);
-        assertEquals(client, savedCompte.getClient());
-    }
+		Compte savedCompte = compteService.saveCompte(compte, client.getId());
 
-    @Test
-    void getCompteById() {
-        Compte compte = TestUtils.getCompte();
-        when(compteRepository.findById(compte.getId())).thenReturn(Optional.of(compte));
+		assertNotNull(savedCompte);
+		assertEquals(client, savedCompte.getClient());
+	}
 
-        Optional<Compte> retrievedCompte = compteService.getCompteById(compte.getId());
+	@Test
+	void getCompteById() {
+		Compte compte = TestUtils.getCompte();
+		when(compteRepository.findById(compte.getId())).thenReturn(Optional.of(compte));
 
-       verify(compteRepository,times(1)).findById(compte.getId());
-    }
+		Optional<Compte> retrievedCompte = compteService.getCompteById(compte.getId());
 
+		verify(compteRepository, times(1)).findById(compte.getId());
+	}
+
+	@Test
+	void virementComptesMontantAutorise() throws VirementImpossibleException {
+
+		VirementDTO virementDTO = new VirementDTO(null, null, 11000);
+
+		String messageReponse = compteService.virementComptes(virementDTO);
+
+		assertEquals(messageReponse, "Le montant du virement doit être un entier compris entre 1 et 10000 euros.");
+	}
 
 }
