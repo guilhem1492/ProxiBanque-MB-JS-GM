@@ -72,7 +72,7 @@ public class CompteServiceImp implements CompteService {
 	@Override
 	public Optional<Compte> getCompteById(Long id) {
 		// TODO Auto-generated method stub
-		return Optional.empty();
+		return compteRepository.findById(id);
 	}
 
 	@Override

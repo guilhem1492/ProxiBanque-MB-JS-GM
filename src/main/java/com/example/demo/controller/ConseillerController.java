@@ -1,5 +1,9 @@
 package com.example.demo.controller;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> mathieu
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,7 +43,7 @@ public class ConseillerController {
 		return conseillerService.saveConseiller(c, id);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/{id}")
 	void deleteConseiller(@PathVariable Long id) {
 		conseillerService.deleteConseillerById(id);
 	}
@@ -50,5 +54,12 @@ public class ConseillerController {
 		return conseillerService.getConseillerByLoginByPassword(login, password);
 
 	}
+<<<<<<< HEAD
 
 }
+=======
+	
+	
+	
+}
+>>>>>>> mathieu
