@@ -41,7 +41,7 @@ public class ConseillerController {
 		return conseillerService.saveConseiller(c, id);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/{id}")
 	void deleteConseiller(@PathVariable Long id) {
 		conseillerService.deleteConseillerById(id);
 	}

@@ -61,20 +61,14 @@ public class ClientServiceImp implements ClientService {
 			client.setConseiller(conseiller);
 		}
 		
-	
 		Client client2 = clientRepository.save(client);
-		
-		
-				
+			
 		CompteCourant compteCourant = new CompteCourant("cc", codeGenerator.generateRandomCode(), 0, LocalDate.now());
 		CompteEpargne compteEpargne = new CompteEpargne("ce", codeGenerator.generateRandomCode(), 0, LocalDate.now());
 		
-		
-		
 		compteCourant.setClient(client2);
 		compteEpargne.setClient(client2);
-				
-		
+
 		client2.setCompteCourant(compteCourant);
 		client2.setCompteEpargne(compteEpargne);
 		
