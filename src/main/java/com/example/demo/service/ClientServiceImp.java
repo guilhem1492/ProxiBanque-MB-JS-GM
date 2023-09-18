@@ -55,26 +55,30 @@ public class ClientServiceImp implements ClientService {
 	@Override
 	public Client saveClient(Client client, Long id) {
 		Optional<Conseiller> conseillerOptional = conseillerRepository.findById(id);
-		if (conseillerOptional.isPresent()) {
+		if (conseillerOptional.isPresent() && conseillerOptional.get().getClients().size() + 1 <= 10) {
 			Conseiller conseiller = conseillerOptional.get();
 			client.setConseiller(conseiller);
+
+			Client client2 = clientRepository.save(client);
+
+			CompteCourant compteCourant = new CompteCourant("cc", codeGenerator.generateRandomCode(), 0,
+					LocalDate.now());
+			CompteEpargne compteEpargne = new CompteEpargne("ce", codeGenerator.generateRandomCode(), 0,
+					LocalDate.now());
+
+			compteCourant.setClient(client2);
+			compteEpargne.setClient(client2);
+
+			client2.setCompteCourant(compteCourant);
+			client2.setCompteEpargne(compteEpargne);
+
+			compteRepository.save(compteCourant);
+			compteRepository.save(compteEpargne);
+
+			return client2;
+		} else {
+			return null;
 		}
-
-		Client client2 = clientRepository.save(client);
-
-		CompteCourant compteCourant = new CompteCourant("cc", codeGenerator.generateRandomCode(), 0, LocalDate.now());
-		CompteEpargne compteEpargne = new CompteEpargne("ce", codeGenerator.generateRandomCode(), 0, LocalDate.now());
-
-		compteCourant.setClient(client2);
-		compteEpargne.setClient(client2);
-
-		client2.setCompteCourant(compteCourant);
-		client2.setCompteEpargne(compteEpargne);
-
-		compteRepository.save(compteCourant);
-		compteRepository.save(compteEpargne);
-
-		return client2;
 	}
 
 	@Override
