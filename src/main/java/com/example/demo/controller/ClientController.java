@@ -19,7 +19,6 @@ import com.example.demo.dto.ClientDTO;
 import com.example.demo.entity.Client;
 import com.example.demo.service.ClientService;
 
-
 import jakarta.validation.Valid;
 
 @RestController
@@ -45,21 +44,21 @@ public class ClientController {
 		return clientService.saveClient(c, id);
 	}
 
-	@DeleteMapping("/{id}")
-	void deleteClient(@PathVariable Long id) {
-		clientService.deleteClientById(id);
-	}
-
 //	@DeleteMapping("/{id}")
-//	public ResponseEntity<String> deleteClient(@PathVariable Long id) throws Exception {
-//		String messageReponse = clientService.deleteClientById(id);
-//
-//		if (messageReponse == "Les comptes du client doivent être à 0.") {
-//			return new ResponseEntity<>(messageReponse, HttpStatus.BAD_REQUEST);
-//		} else {
-//			return ResponseEntity.ok(messageReponse);
-//		}
+//	void deleteClient(@PathVariable Long id) {
+//		clientService.deleteClientById(id);
 //	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteClient(@PathVariable Long id) throws Exception {
+		String messageReponse = clientService.deleteClientById(id);
+
+		if (messageReponse.equals("Les comptes du client doivent être à 0.")) {
+			return new ResponseEntity<>(messageReponse, HttpStatus.BAD_REQUEST);
+		} else {
+			return ResponseEntity.ok(messageReponse);
+		}
+	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<ClientDTO> updateClient(@PathVariable("id") final Long id, @RequestBody ClientDTO client) {

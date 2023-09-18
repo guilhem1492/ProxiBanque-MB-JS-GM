@@ -91,19 +91,19 @@ public class CompteServiceImp implements CompteService {
 		try {
 			String messageReponse = "";
 
-			if (virementDTO.montant() > 0 && virementDTO.montant() <= 10000) {
+			if (virementDTO.montant() >= 1 && virementDTO.montant() <= 10000) {
 
 				Optional<Compte> optionalCompteSource = compteRepository.findById(virementDTO.idSource());
 				Optional<Compte> optionalCompteDestinataire = compteRepository.findById(virementDTO.idDestination());
 
 				if (optionalCompteSource.isPresent() && optionalCompteDestinataire.isPresent()
-						&& optionalCompteSource.get().getId() != optionalCompteDestinataire.get().getId()) {
+						&& !optionalCompteSource.get().getId().equals(optionalCompteDestinataire.get().getId())) {
 					Compte compteSource = optionalCompteSource.get();
 					Compte compteDestinataire = optionalCompteDestinataire.get();
 
 					if (compteSource instanceof CompteCourant && compteDestinataire instanceof CompteCourant) {
 						return virementExterne(virementDTO, messageReponse, compteSource, compteDestinataire);
-					} else if (compteSource.getClient() == compteDestinataire.getClient()) {
+					} else if (compteSource.getClient().equals(compteDestinataire.getClient())) {
 						return virementInterne(virementDTO, messageReponse, compteSource, compteDestinataire);
 					} else {
 						messageReponse = "Seuls les virements externes de comptes courants à comptes courants sont autorisés.";
@@ -116,7 +116,7 @@ public class CompteServiceImp implements CompteService {
 				}
 
 			} else {
-				messageReponse = "Le montant du virement doit être compris entre 1 et 10000 euros.";
+				messageReponse = "Le montant du virement doit être un entier compris entre 1 et 10000 euros.";
 				throw new VirementImpossibleException(messageReponse);
 
 			}

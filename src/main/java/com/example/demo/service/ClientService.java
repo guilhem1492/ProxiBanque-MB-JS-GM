@@ -13,9 +13,9 @@ public interface ClientService {
 
 	Client saveClient(Client client, Long id);
 
-	void deleteClientById(Long id);
+	// void deleteClientById(Long id);
 
-	// String deleteClientById(Long id) throws Exception;
+	String deleteClientById(Long id) throws Exception;
 
 	ClientDTO updateClient(ClientDTO clientDTO);
 }

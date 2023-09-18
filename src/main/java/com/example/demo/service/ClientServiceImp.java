@@ -55,26 +55,30 @@ public class ClientServiceImp implements ClientService {
 	@Override
 	public Client saveClient(Client client, Long id) {
 		Optional<Conseiller> conseillerOptional = conseillerRepository.findById(id);
-		if (conseillerOptional.isPresent()) {
+		if (conseillerOptional.isPresent() && conseillerOptional.get().getClients().size() + 1 <= 10) {
 			Conseiller conseiller = conseillerOptional.get();
 			client.setConseiller(conseiller);
+
+			Client client2 = clientRepository.save(client);
+
+			CompteCourant compteCourant = new CompteCourant("cc", codeGenerator.generateRandomCode(), 0,
+					LocalDate.now());
+			CompteEpargne compteEpargne = new CompteEpargne("ce", codeGenerator.generateRandomCode(), 0,
+					LocalDate.now());
+
+			compteCourant.setClient(client2);
+			compteEpargne.setClient(client2);
+
+			client2.setCompteCourant(compteCourant);
+			client2.setCompteEpargne(compteEpargne);
+
+			compteRepository.save(compteCourant);
+			compteRepository.save(compteEpargne);
+
+			return client2;
+		} else {
+			return null;
 		}
-
-		Client client2 = clientRepository.save(client);
-
-		CompteCourant compteCourant = new CompteCourant("cc", codeGenerator.generateRandomCode(), 0, LocalDate.now());
-		CompteEpargne compteEpargne = new CompteEpargne("ce", codeGenerator.generateRandomCode(), 0, LocalDate.now());
-
-		compteCourant.setClient(client2);
-		compteEpargne.setClient(client2);
-
-		client2.setCompteCourant(compteCourant);
-		client2.setCompteEpargne(compteEpargne);
-
-		compteRepository.save(compteCourant);
-		compteRepository.save(compteEpargne);
-
-		return client2;
 	}
 
 	@Override
@@ -87,11 +91,11 @@ public class ClientServiceImp implements ClientService {
 		return Optional.of(clientDTO);
 	}
 
-	@Override
-	public void deleteClientById(Long id) {
-		clientRepository.deleteById(id);
-
-	}
+//	@Override
+//	public void deleteClientById(Long id) {
+//		clientRepository.deleteById(id);
+//
+//	}
 
 	@Override
 	public ClientDTO updateClient(ClientDTO clientDTO) {
@@ -147,25 +151,25 @@ public class ClientServiceImp implements ClientService {
 
 	}
 
-//	@Override
-//	public String deleteClientById(Long id) throws Exception {
-//		try {
-//			Client client = clientRepository.findById(id).orElse(null);
-//			String messageReponse = "";
-//
-//			if (client.getCompteCourant().getSolde() == 0 && client.getCompteEpargne().getSolde() == 0) {
-//				clientRepository.deleteById(id);
-//				messageReponse = "Client supprimé.";
-//				return messageReponse;
-//			} else {
-//				messageReponse = "Les comptes du client doivent être à 0.";
-//				throw new Exception(messageReponse);
-//			}
-//
-//		} catch (Exception e) {
-//			return e.getMessage();
-//		}
-//
-//	}
+	@Override
+	public String deleteClientById(Long id) throws Exception {
+		try {
+			Client client = clientRepository.findById(id).orElse(null);
+			String messageReponse = "";
+
+			if (client.getCompteCourant().getSolde() == 0 && client.getCompteEpargne().getSolde() == 0) {
+				clientRepository.deleteById(id);
+				messageReponse = "Client supprimé.";
+				return messageReponse;
+			} else {
+				messageReponse = "Les comptes du client doivent être à 0.";
+				throw new Exception(messageReponse);
+			}
+
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+
+	}
 
 }
