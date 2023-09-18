@@ -87,11 +87,11 @@ public class ClientServiceImp implements ClientService {
 		return Optional.of(clientDTO);
 	}
 
-	@Override
-	public void deleteClientById(Long id) {
-		clientRepository.deleteById(id);
-
-	}
+//	@Override
+//	public void deleteClientById(Long id) {
+//		clientRepository.deleteById(id);
+//
+//	}
 
 	@Override
 	public ClientDTO updateClient(ClientDTO clientDTO) {
@@ -147,25 +147,25 @@ public class ClientServiceImp implements ClientService {
 
 	}
 
-//	@Override
-//	public String deleteClientById(Long id) throws Exception {
-//		try {
-//			Client client = clientRepository.findById(id).orElse(null);
-//			String messageReponse = "";
-//
-//			if (client.getCompteCourant().getSolde() == 0 && client.getCompteEpargne().getSolde() == 0) {
-//				clientRepository.deleteById(id);
-//				messageReponse = "Client supprimé.";
-//				return messageReponse;
-//			} else {
-//				messageReponse = "Les comptes du client doivent être à 0.";
-//				throw new Exception(messageReponse);
-//			}
-//
-//		} catch (Exception e) {
-//			return e.getMessage();
-//		}
-//
-//	}
+	@Override
+	public String deleteClientById(Long id) throws Exception {
+		try {
+			Client client = clientRepository.findById(id).orElse(null);
+			String messageReponse = "";
+
+			if (client.getCompteCourant().getSolde() == 0 && client.getCompteEpargne().getSolde() == 0) {
+				clientRepository.deleteById(id);
+				messageReponse = "Client supprimé.";
+				return messageReponse;
+			} else {
+				messageReponse = "Les comptes du client doivent être à 0.";
+				throw new Exception(messageReponse);
+			}
+
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+
+	}
 
 }
