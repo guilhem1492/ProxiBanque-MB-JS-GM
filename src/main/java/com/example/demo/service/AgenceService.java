@@ -4,6 +4,14 @@ import java.util.Optional;
 
 import com.example.demo.entity.Agence;
 
+/**
+ * AgenceService.java Interface permettant l'implémentation des méthodes de CRUD
+ * pour les objets de type Agence
+ * 
+ * @author Mathieu B. Guilhem M. Julien S.
+ * @since 09-12-2023
+ */
+
 public interface AgenceService {
 
 	Agence createAgence(String nom);

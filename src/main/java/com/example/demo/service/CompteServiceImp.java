@@ -26,13 +26,6 @@ public class CompteServiceImp implements CompteService {
 	@Autowired
 	private ClientRepository clientRepository;
 
-//	public CompteServiceImp(CompteRepository compteRepository, RandomCodeGeneratorService randomCodeGeneratorService,
-//			ClientRepository clientRepository) {
-//		this.compteRepository = compteRepository;
-//		this.randomCodeGeneratorService = randomCodeGeneratorService;
-//		this.clientRepository = clientRepository;
-//	}
-
 	public Compte createCompte(String type, int solde) {
 		String numCompte = randomCodeGeneratorService.generateRandomCode();
 		LocalDate creationDate = LocalDate.now();
@@ -71,22 +64,33 @@ public class CompteServiceImp implements CompteService {
 
 	@Override
 	public Optional<Compte> getCompteById(Long id) {
-		// TODO Auto-generated method stub
+		
 		return compteRepository.findById(id);
 	}
 
 	@Override
 	public void deleteCompteById(Long id) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	@Override
 	public Compte updateCompte(Compte compte) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
+	/**
+	 * Méthode qui, à un enregistrement de virement, effectue le virement en base de
+	 * données ou non. Cela en fonction de la situation des comptes renseignés
+	 * (comptes courants/épargnes), leurs soldes et leur propriétaire. Puis renvoie
+	 * un message de validation ou d'erreur.
+	 * 
+	 * @param virementDTO
+	 * @return String
+	 * @throws VirementImpossibleException
+	 * @see virementComptes
+	 */
 	public String virementComptes(VirementDTO virementDTO) throws VirementImpossibleException {
 		try {
 			String messageReponse = "";
@@ -127,6 +131,16 @@ public class CompteServiceImp implements CompteService {
 
 	}
 
+	/**
+	 * Méthode qui, à un enregistrement de virement d'un compte courant à un autre
+	 * compte courant, effectue le virement en base de données ou non. Cela en
+	 * fonction de leurs soldes. Puis renvoie un message de validation ou d'erreur.
+	 * 
+	 * @param virementDTO, messageResponse, compteSource, compteDestinataire
+	 * @return String
+	 * @throws VirementImpossibleException
+	 * @see virementComptes
+	 */
 	public String virementExterne(VirementDTO virementDTO, String messageReponse, Compte compteSource,
 			Compte compteDestinataire) throws VirementImpossibleException {
 
@@ -134,6 +148,16 @@ public class CompteServiceImp implements CompteService {
 
 	}
 
+	/**
+	 * Méthode qui, à un enregistrement de virement d'un compte courant à un compte
+	 * épargne, effectue le virement en base de données ou non. Cela en fonction de
+	 * leurs soldes. Puis renvoie un message de validation ou d'erreur.
+	 * 
+	 * @param virementDTO, messageResponse, compteSource, compteDestinataire
+	 * @return String
+	 * @throws VirementImpossibleException
+	 * @see virementComptes
+	 */
 	public String virementInterne(VirementDTO virementDTO, String messageReponse, Compte compteSource,
 			Compte compteDestinataire) throws VirementImpossibleException {
 
@@ -145,6 +169,18 @@ public class CompteServiceImp implements CompteService {
 
 	}
 
+	/**
+	 * Méthode qui, à un enregistrement de virement d'un compte courant à un compte
+	 * épargne, effectue le virement en base de données ou non. Cela en fonction de
+	 * leurs soldes. Puis renvoie un message de validation ou d'erreur.
+	 * 
+	 * Celle-ci est appelé par les méthodes virementExterne et virementInterne
+	 * 
+	 * @param virementDTO, messageResponse, compteSource, compteDestinataire
+	 * @return String
+	 * @throws VirementImpossibleException
+	 * @see virementComptes
+	 */
 	public String saveTransaction(VirementDTO virementDTO, String messageReponse, Compte compteSource,
 			Compte compteDestinataire, int limiteSolde) throws VirementImpossibleException {
 		if (compteSource.getSolde() - virementDTO.montant() >= limiteSolde) {

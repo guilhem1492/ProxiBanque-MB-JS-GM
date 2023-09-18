@@ -23,10 +23,6 @@ public class AgenceController {
 	@Autowired
 	private AgenceService agenceService;
 
-//	public AgenceController(AgenceService agenceService) {
-//		this.agenceService = agenceService;
-//	}
-
 	@GetMapping
 	Iterable<Agence> getAgences() {
 		return agenceService.getAllAgences();

@@ -44,11 +44,6 @@ public class ClientController {
 		return clientService.saveClient(c, id);
 	}
 
-//	@DeleteMapping("/{id}")
-//	void deleteClient(@PathVariable Long id) {
-//		clientService.deleteClientById(id);
-//	}
-
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteClient(@PathVariable Long id) throws Exception {
 		String messageReponse = clientService.deleteClientById(id);

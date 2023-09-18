@@ -32,11 +32,6 @@ public class ClientServiceImp implements ClientService {
 	@Autowired
 	private RandomCodeGeneratorService codeGenerator;
 
-//	public ClientServiceImp(ClientRepository clientRepository, ConseillerRepository conseillerRepository) {
-//		this.clientRepository = clientRepository;
-//		this.conseillerRepository = conseillerRepository;
-//	}
-
 	@Override
 	public List<ClientDTO> getAllClients() {
 
@@ -91,12 +86,6 @@ public class ClientServiceImp implements ClientService {
 		return Optional.of(clientDTO);
 	}
 
-//	@Override
-//	public void deleteClientById(Long id) {
-//		clientRepository.deleteById(id);
-//
-//	}
-
 	@Override
 	public ClientDTO updateClient(ClientDTO clientDTO) {
 
@@ -116,6 +105,13 @@ public class ClientServiceImp implements ClientService {
 		return updatedClientDTO;
 	}
 
+	/**
+	 * Méthode qui, à un objet de type clientDTO passé en paramètre, renvoie un
+	 * objet de type client avec des parametres identiques
+	 * 
+	 * 
+	 * @return Client
+	 */
 	Client DTOToClient(ClientDTO clientDTO) {
 
 		Client a = new Client();
@@ -132,6 +128,13 @@ public class ClientServiceImp implements ClientService {
 
 	}
 
+	/**
+	 * Méthode qui, à un objet de type client passé en paramètre, renvoie un objet
+	 * de type clientDTO avec des parametres identiques
+	 * 
+	 * 
+	 * @return Client
+	 */
 	ClientDTO ClientToDTO(Client client) {
 
 		ClientDTO a = new ClientDTO();

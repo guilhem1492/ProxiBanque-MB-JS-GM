@@ -28,10 +28,6 @@ public class CompteController {
 	@Autowired
 	private CompteService compteService;
 
-//	public CompteController(CompteService compteService) {
-//		this.compteService = compteService;
-//	}
-
 	@GetMapping
 	Iterable<Compte> getComptes() {
 		return compteService.getAllCompte();

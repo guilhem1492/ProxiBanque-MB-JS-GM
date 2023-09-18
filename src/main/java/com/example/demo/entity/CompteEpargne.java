@@ -13,16 +13,13 @@ public class CompteEpargne extends Compte {
 	@JsonBackReference
 	@OneToOne(mappedBy = "compte")
 	private Client client;
-	
+
 	public CompteEpargne() {
 		super();
 	}
 
 	public CompteEpargne(String type, String numCompte, int solde, LocalDate creationDate) {
-        super(type, numCompte, solde, creationDate);
-    }
+		super(type, numCompte, solde, creationDate);
+	}
 
-	
-	
-	
 }

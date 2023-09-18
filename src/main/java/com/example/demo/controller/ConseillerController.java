@@ -25,10 +25,6 @@ public class ConseillerController {
 	@Autowired
 	private ConseillerService conseillerService;
 
-//	public ConseillerController(ConseillerService conseillerService) {
-//		this.conseillerService = conseillerService;
-//	}
-
 	@GetMapping
 	Iterable<Conseiller> getConseillers() {
 		return conseillerService.getAllConseiller();
@@ -50,12 +46,5 @@ public class ConseillerController {
 		return conseillerService.getConseillerByLoginByPassword(login, password);
 
 	}
-<<<<<<< HEAD
-
 
 }
-
-=======
-
-}
->>>>>>> guilhem
