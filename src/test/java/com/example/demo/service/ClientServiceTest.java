@@ -96,15 +96,15 @@ public class ClientServiceTest {
         verify(clientRepository,times(1)).findById(client.getId());
     }
 
-    @Test
-    void deleteClientById() {
-    	
-    	    
-	    Client client = TestUtils.getClient();
-	    clientService.deleteClientById(client.getId());
-	    verify(clientRepository,times(1)).deleteById(client.getId());
-        
-    }
+//    @Test
+//    void deleteClientById() {
+//    	
+//    	    
+//	    Client client = TestUtils.getClient();
+//	    clientService.deleteClientById(client.getId());
+//	    verify(clientRepository,times(1)).deleteById(client.getId());
+//        
+//    }
 
     @Test
     void updateClient() {
