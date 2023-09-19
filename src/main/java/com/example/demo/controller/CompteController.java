@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.VirementDTO;
@@ -26,10 +28,6 @@ public class CompteController {
 	@Autowired
 	private CompteService compteService;
 
-//	public CompteController(CompteService compteService) {
-//		this.compteService = compteService;
-//	}
-
 	@GetMapping
 	Iterable<Compte> getComptes() {
 		return compteService.getAllCompte();
@@ -41,33 +39,20 @@ public class CompteController {
 		return compteService.saveCompte(newCompte, id);
 	}
 
-//	@PostMapping("/virement")
-//	public ResponseEntity<String> virement(@RequestBody VirementDTO virementDTO) throws VirementImpossibleException {
-//		String messageReponse = compteService.virementComptes(virementDTO);
-//
-//		if (messageReponse == "Solde insuffisant."
-//				|| messageReponse == "Seuls les virements externes de comptes courants à comptes courants sont autorisés."
-//				|| messageReponse == "Le montant du virement doit être compris entre 1 et 10000 euros."
-//				|| messageReponse == "ERREUR. Les ID des deux comptes doivent être valides et différents.") {
-//			return new ResponseEntity<>(messageReponse, HttpStatus.BAD_REQUEST);
-//		} else {
-//
-//			return ResponseEntity.ok(messageReponse);
-//		}
-//	}
-
 	@PostMapping("/virement")
 	public ResponseEntity<String> virement(@RequestBody VirementDTO virementDTO) throws VirementImpossibleException {
-		try {
-			String messageReponse = compteService.virementComptes(virementDTO);
-			if (messageReponse != "Virement effectué avec succès.") {
-				throw new VirementImpossibleException(messageReponse);
-			} else {
-				return new ResponseEntity<>(messageReponse, HttpStatus.OK);
-			}
-		} catch (VirementImpossibleException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		String messageReponse = compteService.virementComptes(virementDTO);
+		if (!messageReponse.equals("Virement effectué avec succès.")) {
+			throw new VirementImpossibleException(messageReponse);
+		} else {
+			return new ResponseEntity<>(messageReponse, HttpStatus.OK);
 		}
+	}
+
+	@ExceptionHandler(VirementImpossibleException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public String traiterVirementImpossible(VirementImpossibleException exception) {
+		return exception.getMessage();
 	}
 
 }

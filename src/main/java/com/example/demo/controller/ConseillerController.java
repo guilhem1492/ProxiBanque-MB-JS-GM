@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,10 +25,6 @@ public class ConseillerController {
 	@Autowired
 	private ConseillerService conseillerService;
 
-//	public ConseillerController(ConseillerService conseillerService) {
-//		this.conseillerService = conseillerService;
-//	}
-
 	@GetMapping
 	Iterable<Conseiller> getConseillers() {
 		return conseillerService.getAllConseiller();
@@ -52,6 +47,4 @@ public class ConseillerController {
 
 	}
 
-
 }
-

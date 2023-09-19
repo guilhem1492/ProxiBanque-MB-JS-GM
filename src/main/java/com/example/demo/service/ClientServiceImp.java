@@ -32,11 +32,6 @@ public class ClientServiceImp implements ClientService {
 	@Autowired
 	private RandomCodeGeneratorService codeGenerator;
 
-//	public ClientServiceImp(ClientRepository clientRepository, ConseillerRepository conseillerRepository) {
-//		this.clientRepository = clientRepository;
-//		this.conseillerRepository = conseillerRepository;
-//	}
-
 	@Override
 	public List<ClientDTO> getAllClients() {
 
@@ -55,26 +50,30 @@ public class ClientServiceImp implements ClientService {
 	@Override
 	public Client saveClient(Client client, Long id) {
 		Optional<Conseiller> conseillerOptional = conseillerRepository.findById(id);
-		if (conseillerOptional.isPresent()) {
+		if (conseillerOptional.isPresent() && conseillerOptional.get().getClients().size() + 1 <= 10) {
 			Conseiller conseiller = conseillerOptional.get();
 			client.setConseiller(conseiller);
+
+			Client client2 = clientRepository.save(client);
+
+			CompteCourant compteCourant = new CompteCourant("cc", codeGenerator.generateRandomCode(), 0,
+					LocalDate.now());
+			CompteEpargne compteEpargne = new CompteEpargne("ce", codeGenerator.generateRandomCode(), 0,
+					LocalDate.now());
+
+			compteCourant.setClient(client2);
+			compteEpargne.setClient(client2);
+
+			client2.setCompteCourant(compteCourant);
+			client2.setCompteEpargne(compteEpargne);
+
+			compteRepository.save(compteCourant);
+			compteRepository.save(compteEpargne);
+
+			return client2;
+		} else {
+			return null;
 		}
-
-		Client client2 = clientRepository.save(client);
-
-		CompteCourant compteCourant = new CompteCourant("cc", codeGenerator.generateRandomCode(), 0, LocalDate.now());
-		CompteEpargne compteEpargne = new CompteEpargne("ce", codeGenerator.generateRandomCode(), 0, LocalDate.now());
-
-		compteCourant.setClient(client2);
-		compteEpargne.setClient(client2);
-
-		client2.setCompteCourant(compteCourant);
-		client2.setCompteEpargne(compteEpargne);
-
-		compteRepository.save(compteCourant);
-		compteRepository.save(compteEpargne);
-
-		return client2;
 	}
 
 	@Override
@@ -87,11 +86,6 @@ public class ClientServiceImp implements ClientService {
 		return Optional.of(clientDTO);
 	}
 
-//	@Override
-//	public void deleteClientById(Long id) {
-//		clientRepository.deleteById(id);
-//
-//	}
 
 	@Override
 	public ClientDTO updateClient(ClientDTO clientDTO) {
@@ -112,6 +106,13 @@ public class ClientServiceImp implements ClientService {
 		return updatedClientDTO;
 	}
 
+	/**
+	 * Méthode qui, à un objet de type clientDTO passé en paramètre, renvoie un
+	 * objet de type client avec des parametres identiques
+	 * 
+	 * 
+	 * @return Client
+	 */
 	Client DTOToClient(ClientDTO clientDTO) {
 
 		Client a = new Client();
@@ -128,6 +129,13 @@ public class ClientServiceImp implements ClientService {
 
 	}
 
+	/**
+	 * Méthode qui, à un objet de type client passé en paramètre, renvoie un objet
+	 * de type clientDTO avec des parametres identiques
+	 * 
+	 * 
+	 * @return Client
+	 */
 	ClientDTO ClientToDTO(Client client) {
 
 		ClientDTO a = new ClientDTO();

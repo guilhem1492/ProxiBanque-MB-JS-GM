@@ -18,11 +18,6 @@ public class AgenceServiceImp implements AgenceService {
 	@Autowired
 	private RandomCodeGeneratorService randomCodeGeneratorService;
 
-//	public AgenceServiceImp(AgenceRepository agenceRepository, RandomCodeGeneratorService randomCodeGeneratorService) {
-//		this.agenceRepository = agenceRepository;
-//		this.randomCodeGeneratorService = randomCodeGeneratorService;
-//	}
-
 	public Agence createAgence(String nom) {
 		String codeAlpha = randomCodeGeneratorService.generateRandomCode();
 		LocalDate creationDate = LocalDate.now();

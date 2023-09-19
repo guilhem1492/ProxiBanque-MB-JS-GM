@@ -20,14 +20,9 @@ public class ConseillerServiceimp implements ConseillerService {
 	@Autowired
 	private AgenceRepository agenceRepository;
 
-//	public ConseillerServiceimp(ConseillerRepository conseillerRepository,AgenceRepository agenceRepository) {
-//		this.conseillerRepository = conseillerRepository;
-//		this.agenceRepository =agenceRepository;
-//	}
-
 	@Override
 	public Iterable<Conseiller> getAllConseiller() {
-		// TODO AuconseillerRepositoryto-generated method stub
+
 		return conseillerRepository.findAll();
 	}
 
@@ -44,7 +39,7 @@ public class ConseillerServiceimp implements ConseillerService {
 
 	@Override
 	public Optional<Conseiller> getConseillerById(Long id) {
-		// TODO Auto-generated method stub
+
 		return conseillerRepository.findById(id);
 	}
 
@@ -56,7 +51,7 @@ public class ConseillerServiceimp implements ConseillerService {
 
 	@Override
 	public Conseiller updateConseiller(Conseiller conseiller) {
-		// TODO Auto-generated method stub
+		// A implementer pour la gestion des conseillers par le gérant
 		return null;
 	}
 
@@ -65,7 +60,6 @@ public class ConseillerServiceimp implements ConseillerService {
 		Conseiller conseiller = conseillerRepository.findByLoginAndPassword(login, password);
 		ConseillerDTO conseillerDTO = new ConseillerDTO();
 
-		// Copier les propriétés de l'entité Conseiller dans l'objet ConseillerDTO
 		conseillerDTO.setId(conseiller.getId());
 		conseillerDTO.setNom(conseiller.getNom());
 		conseillerDTO.setPrenom(conseiller.getPrenom());
