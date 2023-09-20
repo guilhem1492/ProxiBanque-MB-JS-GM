@@ -29,9 +29,14 @@ public class ClientController {
 	@Autowired
 	private ClientService clientService;
 
-	@GetMapping()
-	Iterable<ClientDTO> getClients() {
-		return clientService.getAllClients();
+//	@GetMapping()
+//	Iterable<ClientDTO> getClients() {
+//		return clientService.getAllClients();
+//	}
+
+	@GetMapping("/conseiller/{id}")
+	Iterable<ClientDTO> getClients(@PathVariable Long id) {
+		return clientService.getAllClients(id);
 	}
 
 	@GetMapping("/{id}")

@@ -52,10 +52,23 @@ public class Client {
 		this.nom = nom;
 	}
 
+	public Client(@NotEmpty(message = "Le nom du client doit être renseigné.") String nom, Conseiller conseiller,
+			CompteCourant compteCourant, CompteEpargne compteEpargne, String prenom, String tel, String adresse,
+			String codePostal, String ville) {
+		this.nom = nom;
+		this.conseiller = conseiller;
+		this.compteCourant = compteCourant;
+		this.compteEpargne = compteEpargne;
+		this.prenom = prenom;
+		this.tel = tel;
+		this.adresse = adresse;
+		this.codePostal = codePostal;
+		this.ville = ville;
+	}
+
 	@Override
 	public String toString() {
 		return "Client [id=" + id + ", nom=" + nom + ", conseiller=" + conseiller + ", compteCourant=" + compteCourant
 				+ ", compteEpargne=" + compteEpargne + "]";
 	}
-
 }

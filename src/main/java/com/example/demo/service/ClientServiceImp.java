@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,19 +34,40 @@ public class ClientServiceImp implements ClientService {
 	@Autowired
 	private RandomCodeGeneratorService codeGenerator;
 
-	@Override
-	public List<ClientDTO> getAllClients() {
+//	@Override
+//	public List<ClientDTO> getAllClients() {
+//
+//		List<Client> clients = clientRepository.findAll();
+//
+//		List<ClientDTO> clientsDTOs = new ArrayList<>();
+//
+//		clients.forEach(client -> {
+//			ClientDTO dto = this.ClientToDTO(client);
+//			clientsDTOs.add(dto);
+//		});
+//
+//		return clientsDTOs;
+//	}
 
-		List<Client> clients = clientRepository.findAll();
+	@Override
+	public List<ClientDTO> getAllClients(Long id) {
+
+		Optional<Conseiller> conseillerOptional = conseillerRepository.findById(id);
 
 		List<ClientDTO> clientsDTOs = new ArrayList<>();
 
-		clients.forEach(client -> {
-			ClientDTO dto = this.ClientToDTO(client);
-			clientsDTOs.add(dto);
-		});
+		if (conseillerOptional.isPresent()) {
+			Conseiller conseiller = conseillerOptional.get();
+			Set<Client> clients = conseiller.getClients();
 
-		return clientsDTOs;
+			clients.forEach(client -> {
+				ClientDTO dto = this.ClientToDTO(client);
+				clientsDTOs.add(dto);
+			});
+
+		}
+		return clientsDTOs.stream().sorted((client1, client2) -> client1.getNom().compareTo(client2.getNom())).collect(Collectors.toList());
+
 	}
 
 	@Override

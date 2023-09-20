@@ -1,11 +1,12 @@
 # ProxiBanqueSI
 
 Projet développé par Julien S. Mathieu B. et Guilhem M.
-Il s'agit d'un webservice.
 
-Le système d'information (SI) de ProxiBanque s'appelle ProxiBanqueSI. Il permet au conseiller
-clientèle de créer un client, modifier les informations du client, lire les informations du client et supprimer un client. Le conseiller clientèle peut faire des virements de compte à compte ainsi que des simulations de crédit.
+Le système d'information commandité par la banque ProxiBanque est un web service qui doit permettre à ses conseillers clientèle de créer un client, modifier les informations du client, lire les informations du client et supprimer un client. En outre, le conseiller clientèle peut faire des virements de compte à compte ainsi que des simulations de crédit.
 
+Les conseillers travaillent sous la responsabilité du gérant de leur agence et peuvent assister jusqu'à 10 clients maximum. Chaque client peut disposer d'un compte courant et d'un compte épargne et doit choisir entre une carte Visa Electron et une carte Visa Premier. Il bénéficie d'une autorisation de découvert par défaut de 1000 euros. Le taux de rémunération de son compte épargne s'élève à 3 %.
+
+Une fonctionnalité d'audit proposée par le système d'information ProxiBanque permet au conseiller d'analyser les comptes de ses clients et d'afficher les comptes de particuliers débiteurs de plus de 5000 euros et les comptes d'entreprises débiteurs de plus de 50000 euros.
 
 # Technologies
 
@@ -17,7 +18,7 @@ Java, Spring Boot, JPA, PostgreSQL.
 - Un conseiller peut afficher la liste de ses clients avec leurs données ;
 - Un conseiller peut enregistrer un nouveau client ;
 - Un conseiller peut modifier les informations d'un client ;
-- Un conseiller peut supprimer un client ;
+- Un conseiller peut supprimer un client si ses compte sont à 0 ;
 - Un conseiller peut effectuer des virements externes entre ses clients, de comptes courants à comptes courants ;
 - Un conseiller peut effectuer des virements internes pour un client, d'un compte courant à un compte épargne et vice-versa ;
 - Un conseiller peut afficher sur la page "Audit" les comptes courants débiteurs de plus de 5000 euros.
