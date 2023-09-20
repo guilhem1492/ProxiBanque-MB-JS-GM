@@ -34,6 +34,7 @@ public class ClientController {
 		return clientService.getAllClients();
 	}
 
+
 	@GetMapping("/{id}")
 	Optional<ClientDTO> getClientById(@PathVariable Long id) {
 		return clientService.getClientById(id);
@@ -53,7 +54,7 @@ public class ClientController {
 			return new ResponseEntity<>(messageReponse, HttpStatus.BAD_REQUEST);
 		} else {
 			return ResponseEntity.ok(messageReponse);
-		}
+		} 
 	}
 
 

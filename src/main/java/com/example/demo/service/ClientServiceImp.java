@@ -115,17 +115,17 @@ public class ClientServiceImp implements ClientService {
 	 */
 	Client DTOToClient(ClientDTO clientDTO) {
 
-		Client a = new Client();
+		Client c = new Client();
 
-		a.setNom(clientDTO.getNom());
-		a.setPrenom(clientDTO.getPrenom());
-		a.setAdresse(clientDTO.getAdresse());
-		a.setCodePostal(clientDTO.getCodePostal());
-		a.setVille(clientDTO.getVille());
-		a.setTel(clientDTO.getTel());
+		c.setNom(clientDTO.getNom());
+		c.setPrenom(clientDTO.getPrenom());
+		c.setAdresse(clientDTO.getAdresse());
+		c.setCodePostal(clientDTO.getCodePostal());
+		c.setVille(clientDTO.getVille());
+		c.setTel(clientDTO.getTel());
 
-		a.setConseiller(conseillerRepository.findById(clientDTO.getConseiller_id()).get());
-		return a;
+		c.setConseiller(conseillerRepository.findById(clientDTO.getConseiller_id()).get());
+		return c;
 
 	}
 
@@ -138,20 +138,20 @@ public class ClientServiceImp implements ClientService {
 	 */
 	ClientDTO ClientToDTO(Client client) {
 
-		ClientDTO a = new ClientDTO();
+		ClientDTO c = new ClientDTO();
 
-		a.setId(client.getId());
-		a.setNom(client.getNom());
-		a.setPrenom(client.getPrenom());
-		a.setAdresse(client.getAdresse());
-		a.setCodePostal(client.getCodePostal());
-		a.setVille(client.getVille());
-		a.setTel(client.getTel());
-		a.setCompteCourant(client.getCompteCourant());
-		a.setCompteEpargne(client.getCompteEpargne());
+		c.setId(client.getId());
+		c.setNom(client.getNom());
+		c.setPrenom(client.getPrenom());
+		c.setAdresse(client.getAdresse());
+		c.setCodePostal(client.getCodePostal());
+		c.setVille(client.getVille());
+		c.setTel(client.getTel());
+		c.setCompteCourant(client.getCompteCourant());
+		c.setCompteEpargne(client.getCompteEpargne());
 
-		a.setConseiller_id(client.getConseiller().getId());
-		return a;
+		c.setConseiller_id(client.getConseiller().getId());
+		return c;
 
 	}
 

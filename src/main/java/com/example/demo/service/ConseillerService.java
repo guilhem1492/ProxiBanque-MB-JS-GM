@@ -22,7 +22,6 @@ public interface ConseillerService {
 
 	void deleteConseillerById(Long id);
 
-	Conseiller updateConseiller(Conseiller conseiller);
 
 	/**
 	 * Méthode qui à un nom d'utilisateur et un mot de passe, va interroger la base

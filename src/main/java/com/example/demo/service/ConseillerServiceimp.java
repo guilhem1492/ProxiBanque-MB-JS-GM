@@ -49,11 +49,6 @@ public class ConseillerServiceimp implements ConseillerService {
 
 	}
 
-	@Override
-	public Conseiller updateConseiller(Conseiller conseiller) {
-		// A implementer pour la gestion des conseillers par le gérant
-		return null;
-	}
 
 	@Override
 	public ConseillerDTO getConseillerByLoginByPassword(String login, String password) {
