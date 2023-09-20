@@ -64,19 +64,18 @@ public class CompteServiceImp implements CompteService {
 
 	@Override
 	public Optional<Compte> getCompteById(Long id) {
-		
+
 		return compteRepository.findById(id);
 	}
 
 	@Override
 	public void deleteCompteById(Long id) {
-		
 
 	}
 
 	@Override
 	public Compte updateCompte(Compte compte) {
-		
+
 		return null;
 	}
 
@@ -150,8 +149,9 @@ public class CompteServiceImp implements CompteService {
 
 	/**
 	 * Méthode qui, à un enregistrement de virement d'un compte courant à un compte
-	 * épargne, effectue le virement en base de données ou non. Cela en fonction de
-	 * leurs soldes. Puis renvoie un message de validation ou d'erreur.
+	 * épargne ou vice-versa d'un même client, effectue le virement en base de
+	 * données ou non. Cela en fonction de leurs soldes. Puis renvoie un message de
+	 * validation ou d'erreur.
 	 * 
 	 * @param virementDTO, messageResponse, compteSource, compteDestinataire
 	 * @return String
@@ -170,11 +170,10 @@ public class CompteServiceImp implements CompteService {
 	}
 
 	/**
-	 * Méthode qui, à un enregistrement de virement d'un compte courant à un compte
-	 * épargne, effectue le virement en base de données ou non. Cela en fonction de
-	 * leurs soldes. Puis renvoie un message de validation ou d'erreur.
+	 * Méthode qui enregistre une transaction de compte à compte dans la base de
+	 * données. Puis renvoie un message de validation ou d'erreur.
 	 * 
-	 * Celle-ci est appelé par les méthodes virementExterne et virementInterne
+	 * Celle-ci est appelée par les méthodes virementExterne et virementInterne.
 	 * 
 	 * @param virementDTO, messageResponse, compteSource, compteDestinataire
 	 * @return String

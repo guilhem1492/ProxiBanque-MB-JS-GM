@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.example.demo.dto.ClientDTO;
@@ -14,7 +15,7 @@ import com.example.demo.entity.Client;
  */
 public interface ClientService {
 
-	Iterable<ClientDTO> getAllClients();
+	// Iterable<ClientDTO> getAllClients();
 
 	Optional<ClientDTO> getClientById(Long id);
 
@@ -23,5 +24,7 @@ public interface ClientService {
 	String deleteClientById(Long id) throws Exception;
 
 	ClientDTO updateClient(ClientDTO clientDTO);
+
+	List<ClientDTO> getAllClients(Long id);
 
 }

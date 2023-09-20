@@ -46,7 +46,7 @@ public class ClientServiceTest {
 		client.setConseiller(conseiller);
 		when(clientRepository.findAll()).thenReturn(List.of(client));
 
-		assertEquals(clientService.getAllClients().size(), 1);
+		assertEquals(clientService.getAllClients(conseiller.getId()).size(), 1);
 	}
 
 	@Test
@@ -87,32 +87,37 @@ public class ClientServiceTest {
 
 //	@Test
 //	void deleteClientByIdIfBothAccountToZero() throws Exception {
-//		Client clientTest = new Client();
-//		CompteCourant compteCourant = new CompteCourant();
-//		CompteEpargne compteEpargne = new CompteEpargne();
 //
-//		clientTest.setId(111L);
-//		clientTest.setCompteCourant(compteCourant);
-//		clientTest.setCompteEpargne(compteEpargne);
+//		CompteCourant compteCourant1 = new CompteCourant("cc", "0123", 0, LocalDate.now());
+//		CompteEpargne compteEpargne1 = new CompteEpargne("ce", "0125", 0, LocalDate.now());
 //
-//		clientTest.getCompteCourant().setSolde(0);
-//		clientTest.getCompteEpargne().setSolde(0);
+//		Conseiller conseiller1 = new Conseiller("John Doe");
+//		conseiller1.setLogin("JayD");
+//		conseiller1.setPassword("1234");
+//		conseiller1.setGradeGerant(false);
+//
+//		Client clientTest = new Client("Nom", conseiller1, compteCourant1, compteEpargne1, "Prénom", "0612345678",
+//				"7 rue des Plantes", "75014", "Paris");
+//
+//		// clientService.saveClient(clientTest, conseiller1.getId());
+//		clientRepository.save(clientTest);
 //
 //		String messageReponse = clientService.deleteClientById(clientTest.getId());
 //
-//		assertEquals(messageReponse, "Client supprimé.");
-//		verify(clientRepository, times(1)).deleteById(clientTest.getId());
+////		verify(clientRepository, times(1)).deleteById(clientTest.getId());
+//
+//		assertEquals("Client supprimé.", messageReponse);
 //
 //	}
 
-//	@Test
-//	void deleteClientById() {
-//
-//		Client client = TestUtils.getClient();
-//		clientService.deleteClientById(client.getId());
-//		verify(clientRepository, times(1)).deleteById(client.getId());
-//
-//	}
+	@Test
+	void deleteClientById() throws Exception {
+
+		Client client = TestUtils.getClient();
+		clientService.deleteClientById(client.getId());
+		verify(clientRepository, times(1)).deleteById(client.getId());
+
+	}
 
 	@Test
 	void updateClient() {
